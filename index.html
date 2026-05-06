@@ -503,8 +503,16 @@
                 btn.disabled = true;
 
                 try {
-                    const { error } = await supabaseClient.from('orders').insert([orderData]);
-                    if (!error) {
+                    const { data, error } = await supabaseClient.from('orders').insert([orderData]).select();
+                    if (!error && data) {
+                        const newOrderId = data[0].id;
+                        let myOrders = JSON.parse(localStorage.getItem('myOrders') || '[]');
+                        if (!myOrders.includes(newOrderId)) {
+                            myOrders.push(newOrderId);
+                            localStorage.setItem('myOrders', JSON.stringify(myOrders));
+                        }
+                        setupOrdersListener(); // Relancer l'écoute
+
                         alert("🎉 Commande reçue ! Nous préparons votre livraison.");
                         cart = [];
                         updateCartBadge();
@@ -520,6 +528,73 @@
         }
         
         updateCartBadge();
+
+        // --- NOTIFICATIONS EN TEMPS RÉEL (CLIENT) ---
+        function showNotification(message, isReady = false) {
+            let toast = document.getElementById('orderToast');
+            if (!toast) {
+                toast = document.createElement('div');
+                toast.id = 'orderToast';
+                toast.style.position = 'fixed';
+                toast.style.bottom = '20px';
+                toast.style.left = '50%';
+                toast.style.transform = 'translateX(-50%)';
+                toast.style.padding = '14px 24px';
+                toast.style.borderRadius = '10px';
+                toast.style.boxShadow = '0 10px 25px rgba(0,0,0,0.2)';
+                toast.style.zIndex = '99999';
+                toast.style.fontWeight = '600';
+                toast.style.fontFamily = "'Outfit', sans-serif";
+                toast.style.display = 'flex';
+                toast.style.alignItems = 'center';
+                toast.style.gap = '10px';
+                toast.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+                toast.style.opacity = '0';
+                toast.style.pointerEvents = 'none';
+                document.body.appendChild(toast);
+            }
+            
+            toast.style.background = isReady ? '#4ade80' : '#c5a059'; // Vert ou Doré
+            toast.style.color = isReady ? '#fff' : '#1a1a1a';
+            toast.innerHTML = `<i class="${isReady ? 'fas fa-check-circle' : 'fas fa-bell'}" style="font-size: 1.2rem;"></i> <span>${message}</span>`;
+            
+            // Animation
+            setTimeout(() => { 
+                toast.style.opacity = '1'; 
+                toast.style.transform = 'translate(-50%, -10px)';
+            }, 100);
+            
+            setTimeout(() => { 
+                toast.style.opacity = '0'; 
+                toast.style.transform = 'translate(-50%, 0)';
+            }, 6000);
+        }
+
+        let ordersChannel = null;
+        function setupOrdersListener() {
+            const myOrders = JSON.parse(localStorage.getItem('myOrders') || '[]');
+            if (myOrders.length === 0) return;
+
+            if (ordersChannel) {
+                supabaseClient.removeChannel(ordersChannel);
+            }
+
+            ordersChannel = supabaseClient.channel('public:client_orders')
+                .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'orders' }, payload => {
+                    const updatedOrder = payload.new;
+                    if (myOrders.includes(updatedOrder.id)) {
+                        if (updatedOrder.status === 'preparing') {
+                            showNotification("Votre commande a été acceptée et est en cuisine !", false);
+                        } else if (updatedOrder.status === 'ready') {
+                            showNotification("Votre commande est prête !", true);
+                        }
+                    }
+                })
+                .subscribe();
+        }
+
+        // Démarrer l'écoute au chargement de la page
+        setupOrdersListener();
     </script>
 </body>
 </html>
