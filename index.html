@@ -504,14 +504,16 @@
 
                 try {
                     const { data, error } = await supabaseClient.from('orders').insert([orderData]).select();
-                    if (!error && data) {
-                        const newOrderId = data[0].id;
-                        let myOrders = JSON.parse(localStorage.getItem('myOrders') || '[]');
-                        if (!myOrders.includes(newOrderId)) {
-                            myOrders.push(newOrderId);
-                            localStorage.setItem('myOrders', JSON.stringify(myOrders));
+                    if (!error) {
+                        if (data && data.length > 0) {
+                            const newOrderId = data[0].id;
+                            let myOrders = JSON.parse(localStorage.getItem('myOrders') || '[]');
+                            if (!myOrders.includes(newOrderId)) {
+                                myOrders.push(newOrderId);
+                                localStorage.setItem('myOrders', JSON.stringify(myOrders));
+                            }
+                            setupOrdersListener();
                         }
-                        setupOrdersListener(); // Relancer l'écoute
 
                         alert("🎉 Commande reçue ! Nous préparons votre livraison.");
                         cart = [];

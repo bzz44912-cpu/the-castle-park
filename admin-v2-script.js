@@ -185,12 +185,12 @@ document.addEventListener('DOMContentLoaded', async function() {
                     </span>
                 </div>
                 <div class="order-items-list">
-                    ${o.items.map(i => `
+                    ${(o.items && Array.isArray(o.items)) ? o.items.map(i => `
                         <div class="order-item-row">
                             <span>${i.qty}x ${i.name}</span>
                             <span style="font-weight: 600;">${(i.price * i.qty).toFixed(2)}€</span>
                         </div>
-                    `).join('')}
+                    `).join('') : '<div class="order-item-row"><span>Aucun article</span></div>'}
                 </div>
                 <div class="order-note">
                     <span style="font-style: italic;">Note: ${o.address || 'Livraison standard'}</span>
