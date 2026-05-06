@@ -1,0 +1,323 @@
+/* Cherry Blossom Decorative Elements */
+.cherry-blossom-decoration {
+    position: fixed;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.blossom-top-left {
+    top: 100px;
+    left: 20px;
+    width: 120px;
+    height: 120px;
+    background: radial-gradient(circle, var(--pink-soft) 0%, transparent 70%);
+    border-radius: 50%;
+    opacity: 0.4;
+    filter: blur(30px);
+    animation: float 8s ease-in-out infinite;
+}
+
+.blossom-bottom-right {
+    bottom: 100px;
+    right: 20px;
+    width: 150px;
+    height: 150px;
+    background: radial-gradient(circle, var(--pink-blossom) 0%, transparent 70%);
+    border-radius: 50%;
+    opacity: 0.3;
+    filter: blur(40px);
+    animation: float 10s ease-in-out infinite reverse;
+}
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0) scale(1);
+    }
+
+    50% {
+        transform: translateY(-20px) scale(1.1);
+    }
+}
+
+/* Gold Accent Lines - Inspired by cafe interior */
+.gold-line-accent {
+    position: relative;
+}
+
+.gold-line-accent::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(to right, var(--primary-gold), transparent);
+}
+
+.gold-line-accent::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(to left, var(--primary-gold), transparent);
+}
+
+/* Section Headers with Marble Effect */
+.section-header {
+    text-align: center;
+    margin-bottom: 60px;
+    position: relative;
+}
+
+.section-header h2 {
+    position: relative;
+    display: inline-block;
+    padding: 20px 40px;
+}
+
+.separator {
+    width: 120px;
+    height: 4px;
+    background: linear-gradient(to right, var(--pink-blossom), var(--primary-gold), var(--sage-green));
+    margin: 20px auto;
+    border-radius: 2px;
+    box-shadow: 0 2px 10px rgba(197, 160, 89, 0.3);
+}
+
+/* Neon Text Effect for Special Headings (Inspired by "The Castle" sign) */
+.neon-text {
+    color: var(--sage-green);
+    text-shadow:
+        0 0 5px var(--sage-green-light),
+        0 0 10px var(--sage-green-light),
+        0 0 20px var(--sage-green),
+        0 0 40px var(--sage-green);
+    animation: neonPulse 2s ease-in-out infinite;
+}
+
+@keyframes neonPulse {
+
+    0%,
+    100% {
+        opacity: 1;
+        text-shadow:
+            0 0 5px var(--sage-green-light),
+            0 0 10px var(--sage-green-light),
+            0 0 20px var(--sage-green),
+            0 0 40px var(--sage-green);
+    }
+
+    50% {
+        opacity: 0.8;
+        text-shadow:
+            0 0 2px var(--sage-green-light),
+            0 0 5px var(--sage-green-light),
+            0 0 10px var(--sage-green),
+            0 0 20px var(--sage-green);
+    }
+}
+
+/* Marble Texture Card */
+.marble-card {
+    background:
+        linear-gradient(135deg, transparent 25%, rgba(255, 255, 255, 0.05) 25%, rgba(255, 255, 255, 0.05) 50%, transparent 50%, transparent 75%, rgba(255, 255, 255, 0.05) 75%),
+        linear-gradient(to bottom, var(--white-pure), var(--cream-white));
+    background-size: 20px 20px, 100% 100%;
+    box-shadow:
+        0 10px 40px rgba(0, 0, 0, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+/* Green Carpet Effect (for footer or special sections) */
+.green-carpet-section {
+    background: linear-gradient(135deg, var(--green-carpet), var(--green-deep));
+    position: relative;
+    overflow: hidden;
+}
+
+.green-carpet-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background:
+        repeating-linear-gradient(90deg,
+            transparent,
+            transparent 2px,
+            rgba(255, 255, 255, 0.03) 2px,
+            rgba(255, 255, 255, 0.03) 4px);
+}
+
+/* Staircase Gold Rail Accent */
+.stair-rail-accent {
+    position: relative;
+    padding-left: 30px;
+}
+
+.stair-rail-accent::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--primary-gold), var(--gold-dark));
+    box-shadow: 0 0 10px rgba(197, 160, 89, 0.5);
+}
+
+/* Gallery Grid with Pink Blossom Overlay */
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    margin-top: 50px;
+}
+
+.gallery-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    border: 3px solid var(--sage-green-light);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    aspect-ratio: 4/3;
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: var(--transition);
+}
+
+.gallery-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg,
+            rgba(42, 107, 112, 0.9),
+            rgba(221, 161, 94, 0.7));
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: var(--transition);
+    color: var(--white-pure);
+    font-weight: 600;
+}
+
+.gallery-item:hover .gallery-overlay {
+    opacity: 1;
+}
+
+.gallery-item:hover img {
+    transform: scale(1.1);
+}
+
+.gallery-overlay i {
+    font-size: 3rem;
+    margin-bottom: 15px;
+    color: var(--primary-gold);
+}
+
+/* Testimonials Section */
+.testimonials-section {
+    background: linear-gradient(to bottom, var(--bg-cream), var(--bg-sage));
+    position: relative;
+}
+
+.testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 40px;
+}
+
+.testimonial-card {
+    background: var(--white-pure);
+    padding: 40px;
+    border-radius: 8px;
+    border: 2px solid var(--sage-green-light);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    transition: var(--transition);
+    position: relative;
+}
+
+.testimonial-card::before {
+    content: '"';
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    font-size: 5rem;
+    font-family: var(--font-heading);
+    color: var(--pink-soft);
+    opacity: 0.3;
+    line-height: 1;
+}
+
+.testimonial-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--primary-gold);
+    box-shadow: 0 15px 40px rgba(197, 160, 89, 0.15);
+}
+
+.testimonial-stars {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 1;
+}
+
+.testimonial-stars i {
+    color: var(--primary-gold);
+    font-size: 1.2rem;
+}
+
+.testimonial-text {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: var(--gray-dark);
+    margin-bottom: 25px;
+    font-style: italic;
+    position: relative;
+    z-index: 1;
+}
+
+.testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    position: relative;
+    z-index: 1;
+}
+
+.author-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--sage-green), var(--olive-wall));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--white-pure);
+    font-size: 1.5rem;
+}
+
+.author-info h4 {
+    font-size: 1.1rem;
+    color: var(--sage-green-dark);
+    margin-bottom: 5px;
+}
+
+.author-info p {
+    font-size: 0.9rem;
+    color: var(--gray-modern);
+}

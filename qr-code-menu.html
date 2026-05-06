@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Menu - The Castle Park</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lato:wght@300;400;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- QR Code Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            background: linear-gradient(135deg, #2F5D3E 0%, #1a3a28 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            width: 100%;
+            background: white;
+            border-radius: 20px;
+            padding: 60px 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Decorative corners */
+        .corner {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            border: 3px solid #D4AF37;
+        }
+
+        .corner.top-left {
+            top: 15px;
+            left: 15px;
+            border-right: none;
+            border-bottom: none;
+        }
+
+        .corner.top-right {
+            top: 15px;
+            right: 15px;
+            border-left: none;
+            border-bottom: none;
+        }
+
+        .corner.bottom-left {
+            bottom: 15px;
+            left: 15px;
+            border-right: none;
+            border-top: none;
+        }
+
+        .corner.bottom-right {
+            bottom: 15px;
+            right: 15px;
+            border-left: none;
+            border-top: none;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            color: #D4AF37;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .subtitle {
+            color: #2F5D3E;
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            font-weight: 300;
+        }
+
+        .qr-container {
+            background: #f8f8f8;
+            padding: 30px;
+            border-radius: 15px;
+            border: 3px solid #D4AF37;
+            display: inline-block;
+            margin: 30px 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        #qrcode {
+            display: inline-block;
+        }
+
+        #qrcode img {
+            border-radius: 10px;
+        }
+
+        .instructions {
+            color: #2F5D3E;
+            font-size: 1.2rem;
+            margin-top: 30px;
+            font-weight: 600;
+        }
+
+        .instructions i {
+            color: #D4AF37;
+            margin-right: 10px;
+            font-size: 1.4rem;
+        }
+
+        .description {
+            color: #666;
+            margin-top: 15px;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .buttons {
+            margin-top: 40px;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border-radius: 50px;
+            border: none;
+            font-family: 'Lato', sans-serif;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1rem;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #D4AF37, #B59020);
+            color: #000;
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(212, 175, 55, 0.5);
+        }
+
+        .btn-secondary {
+            background: #2F5D3E;
+            color: white;
+            box-shadow: 0 5px 15px rgba(47, 93, 62, 0.3);
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-2px);
+            background: #1a3a28;
+        }
+
+        .info-box {
+            background: #f0f7f4;
+            border-left: 4px solid #3d5a40;
+            padding: 20px;
+            margin-top: 30px;
+            border-radius: 8px;
+            text-align: left;
+        }
+
+        .info-box h3 {
+            color: #2F5D3E;
+            font-family: 'Playfair Display', serif;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .info-box ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .info-box li {
+            color: #666;
+            margin: 8px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .info-box li:before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #D4AF37;
+            font-weight: bold;
+        }
+
+        .info-box code {
+            background: rgba(47, 93, 62, 0.1);
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            color: #2F5D3E;
+        }
+
+        @media print {
+            body {
+                background: white;
+            }
+
+            .buttons,
+            .info-box {
+                display: none;
+            }
+
+            .container {
+                box-shadow: none;
+                max-width: 100%;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 40px 20px;
+            }
+
+            .logo {
+                font-size: 2rem;
+            }
+
+            .qr-container {
+                padding: 20px;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Decorative corners -->
+        <div class="corner top-left"></div>
+        <div class="corner top-right"></div>
+        <div class="corner bottom-left"></div>
+        <div class="corner bottom-right"></div>
+
+        <!-- Header -->
+        <div class="logo">The Castle Park</div>
+        <div class="subtitle">
+            <a href="https://maps.app.goo.gl/2MVquQtkWmLYrJnx5" target="_blank" style="color: inherit; text-decoration: underline; text-underline-offset: 3px; position: relative; z-index: 10;" title="Voir sur Google Maps">
+                Sidi Bouzid, Tunisie
+            </a>
+        </div>
+
+        <!-- QR Code -->
+        <div class="qr-container">
+            <div id="qrcode"></div>
+        </div>
+
+        <!-- Instructions -->
+        <div class="instructions">
+            <i class="fas fa-qrcode"></i>
+            Scannez pour voir notre menu
+        </div>
+
+        <p class="description">
+            Utilisez l'appareil photo de votre smartphone pour scanner ce QR code
+            et accéder instantanément à notre menu complet avec tous nos cafés,
+            thés, pâtisseries et bien plus encore.
+        </p>
+
+        <!-- Action Buttons -->
+        <div class="buttons">
+            <a href="menu_complet.html" class="btn btn-primary" target="_blank">
+                <i class="fas fa-book-open"></i>
+                Voir le Menu
+            </a>
+            <button class="btn btn-secondary" onclick="downloadQR()">
+                <i class="fas fa-download"></i>
+                Télécharger QR
+            </button>
+            <button class="btn btn-secondary" onclick="window.print()">
+                <i class="fas fa-print"></i>
+                Imprimer
+            </button>
+        </div>
+
+        <!-- Info Box -->
+        <div class="info-box">
+            <h3>💡 Comment utiliser ce QR Code :</h3>
+            <ul>
+                <li><strong>Statut</strong>: ✅ Site en ligne sur <code>the-loft-lounge.tn</code></li>
+                <li><strong>Accéder à la page</strong>: Ouvrez <code>https://the-loft-lounge.tn/qr-code-menu.html</code></li>
+                <li><strong>Accès Universel</strong>: Le QR code fonctionne partout (WiFi ou 4G/5G)</li>
+                <li><strong>Imprimer et placer</strong>: Imprimez cette page et placez-la sur vos tables</li>
+            </ul>
+
+            <h3 style="margin-top: 20px;">✅ Configuration Terminée :</h3>
+            <ul>
+                <li>Le QR code redirige maintenant vers l'URL officielle.</li>
+                <li>Plus besoin de laisser votre ordinateur allumé ou de lancer <code>node server.js</code>.</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // ================================================================
+        // CONFIGURATION - Modifier selon votre environnement
+        // ================================================================
+
+        // URL de base du site - MODIFIEZ cette valeur selon votre configuration
+        // Pour le développement local : 'http://localhost:3000'
+        // Pour la production : 'https://votre-domaine.com' ou votre URL publique
+        // IMPORTANT: Pour scanner avec un smartphone, utilisez l'IP locale de votre PC
+        const BASE_URL = 'https://the-loft-lounge.tn';  // ✅ Configuré pour votre domaine public (Mis à jour)
+
+        // ================================================================
+        // GÉNÉRATION DU QR CODE
+        // ================================================================
+
+        // Construire l'URL complète du menu
+        const menuUrl = BASE_URL + '/menu_complet.html';
+
+        // Afficher l'URL dans la console pour vérification
+        console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+        console.log('🔗 QR Code généré pour:', menuUrl);
+        console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+        console.log('');
+        console.log('✅ Pour tester le QR code:');
+        console.log('   1. Démarrez le serveur: node server.js');
+        console.log('   2. Ouvrez cette page: http://localhost:3000/qr-code-menu.html');
+        console.log('   3. Scannez le QR code avec votre smartphone');
+        console.log('');
+        console.log('📱 Le QR code redirigera vers: ' + menuUrl);
+        console.log('');
+        console.log('⚠️ IMPORTANT:');
+        console.log('   - Le serveur Node.js DOIT être en cours d\'exécution');
+        console.log('   - Votre smartphone doit être sur le même réseau WiFi');
+        console.log('   - Pour un accès externe, remplacez BASE_URL par votre URL publique');
+        console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+
+        // Générer le QR Code avec l'URL configurée
+        const qrcode = new QRCode(document.getElementById("qrcode"), {
+            text: menuUrl,
+            width: 300,
+            height: 300,
+            colorDark: "#000000",
+            colorLight: "#ffffff",
+            correctLevel: QRCode.CorrectLevel.H
+        });
+
+        // ================================================================
+        // FONCTION DE TÉLÉCHARGEMENT
+        // ================================================================
+
+        function downloadQR() {
+            const canvas = document.querySelector('#qrcode canvas');
+            if (canvas) {
+                const link = document.createElement('a');
+                link.download = 'the-loft-lounge-menu-qr-code.png';
+                link.href = canvas.toDataURL();
+                link.click();
+                console.log('✅ QR Code téléchargé avec succès!');
+            } else {
+                // Fallback pour image
+                const img = document.querySelector('#qrcode img');
+                if (img) {
+                    const link = document.createElement('a');
+                    link.download = 'the-loft-lounge-menu-qr-code.png';
+                    link.href = img.src;
+                    link.click();
+                    console.log('✅ QR Code téléchargé avec succès!');
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>

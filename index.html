@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Castle Park</title>
+    <meta name="description" content="The Castle Park – Un espace de gastronomie raffinée, une ambiance épurée et chic à la française.">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- AOS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="styles_with_photos.css">
+    <link rel="stylesheet" href="chatbot_premium.css">
+    <link rel="stylesheet" href="styles_architecture.css">
+    
+    <!-- Supabase SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
+</head>
+
+<body>
+    <!-- ====== NAVBAR ====== -->
+    <nav class="navbar-new glass-blur-15" id="navbar">
+        <div class="nav-container-new">
+            <a href="#home" class="nav-logo-simple">
+                THE CASTLE PARK
+            </a>
+            <ul class="nav-links-new" id="navLinks">
+                <li><a href="#home" class="nav-link-new active">ACCUEIL</a></li>
+                <li><a href="#story" class="nav-link-new">HISTOIRE</a></li>
+                <li><a href="#menu" class="nav-link-new">MENU</a></li>
+                <li><a href="#gallery" class="nav-link-new">SERVICES</a></li>
+                <li><a href="#gallery" class="nav-link-new">GALERIE</a></li>
+                <li><a href="#contact" class="nav-link-new">CONTACT</a></li>
+            </ul>
+            <a href="#contact" class="nav-cta-new">RÉSERVER</a>
+            <button class="nav-toggle-new" id="navToggle" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- ====== HERO ====== -->
+    <section id="home" class="hero-new">
+        <div class="hero-bg-image-new"></div>
+        <div class="hero-overlay-light"></div>
+        
+        <div class="hero-content-new">
+            <h1 class="hero-title-new" data-aos="fade-up">BIENVENUE AU CASTLE<br>PARK</h1>
+            <p class="hero-tagline-new" data-aos="fade-up" data-aos-delay="200">
+                Une évasion au cœur de la nature, où le café premium rencontre la cuisine<br>
+                raffinée dans une ambiance de parc historique inoubliable.
+            </p>
+            <div class="hero-actions-new" data-aos="fade-up" data-aos-delay="400">
+                <a href="#menu" class="btn-hero-primary-new">VOIR LE MENU</a>
+                <a href="#contact" class="btn-hero-outline-new">RÉSERVER</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Divider Icon -->
+    <div class="section-divider-icon"><i class="fas fa-fan"></i></div>
+
+    <!-- ====== STORY SECTION ====== -->
+    <section id="story" class="section-new story-new">
+        <div class="container-new story-container-new">
+            <div class="story-visual-new" data-aos="fade-right">
+                <div class="story-img-wrapper-new">
+                    <img src="assets/images/window_view.jpg" alt="Castle Park Interior" />
+                </div>
+            </div>
+            <div class="story-text-new" data-aos="fade-left">
+                <h2 class="section-title-new">NOTRE HISTOIRE</h2>
+                <h3 class="section-subtitle-new">L'Héritage du Parc</h3>
+                <p class="story-body-new">
+                    Né de la passion pour l'héritage historique et le service premium, notre établissement offre une parenthèse hors du temps au sein d'un parc enchanteur. Chaque détail, de la sélection de nos grains de café à l'aménagement de nos terrasses, a été pensé pour vous offrir une expérience sensorielle unique.
+                </p>
+                <div class="story-badges-new">
+                    <div class="badge-item-new hover-up-10 hover-glow-10">
+                        <i class="fas fa-coffee"></i>
+                        <span>CAFÉ<br>PREMIUM</span>
+                    </div>
+                    <div class="badge-item-new hover-up-10 hover-glow-10">
+                        <i class="fas fa-couch"></i>
+                        <span>ESPACE<br>DÉTENTE</span>
+                    </div>
+                    <div class="badge-item-new hover-up-10 hover-glow-10">
+                        <i class="fas fa-concierge-bell"></i>
+                        <span>AMBIANCE<br>LOCALE</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== NOS SPÉCIALITÉS ====== -->
+    <section id="menu" class="section-new specialties-section-new">
+        <div class="container-new">
+            <div class="section-header-new" data-aos="fade-up">
+                <h2 class="section-title-new">NOS SPÉCIALITÉS</h2>
+                <div class="gold-icon-divider"><i class="fas fa-fan"></i></div>
+            </div>
+
+            <div class="specialties-grid-new">
+                <div class="spec-card-new hover-up-15 hover-glow-5" data-aos="fade-up" data-aos-delay="100">
+                    <div class="spec-icon-new"><i class="fas fa-coffee"></i></div>
+                    <div class="spec-content-new">
+                        <h4>Boissons</h4>
+                        <p>Cafés de spécialité & Thés fins</p>
+                    </div>
+                    <div class="spec-watermark-new"><i class="fas fa-fan"></i></div>
+                </div>
+                <div class="spec-card-new hover-up-15 hover-glow-5" data-aos="fade-up" data-aos-delay="150">
+                    <div class="spec-icon-new"><i class="fas fa-utensils"></i></div>
+                    <div class="spec-content-new">
+                        <h4>Brunch</h4>
+                        <p>L'art du petit-déjeuner tardif</p>
+                    </div>
+                    <div class="spec-watermark-new"><i class="fas fa-fan"></i></div>
+                </div>
+                <div class="spec-card-new" data-aos="fade-up" data-aos-delay="200">
+                    <div class="spec-icon-new"><i class="fas fa-concierge-bell"></i></div>
+                    <div class="spec-content-new">
+                        <h4>Cuisine Salée</h4>
+                        <p>Mets raffinés pour le déjeuner</p>
+                    </div>
+                    <div class="spec-watermark-new"><i class="fas fa-fan"></i></div>
+                </div>
+                <div class="spec-card-new" data-aos="fade-up" data-aos-delay="250">
+                    <div class="spec-icon-new"><i class="fas fa-birthday-cake"></i></div>
+                    <div class="spec-content-new">
+                        <h4>Pâtisseries</h4>
+                        <p>Créations sucrées artisanales</p>
+                    </div>
+                    <div class="spec-watermark-new"><i class="fas fa-fan"></i></div>
+                </div>
+                <div class="spec-card-new" data-aos="fade-up" data-aos-delay="300">
+                    <div class="spec-icon-new"><i class="fas fa-hamburger"></i></div>
+                    <div class="spec-content-new">
+                        <h4>Tapas</h4>
+                        <p>Pour accompagner vos soirées</p>
+                    </div>
+                    <div class="spec-watermark-new"><i class="fas fa-fan"></i></div>
+                </div>
+                <div class="spec-card-new" data-aos="fade-up" data-aos-delay="350">
+                    <div class="spec-icon-new"><i class="fas fa-glass-martini-alt"></i></div>
+                    <div class="spec-content-new">
+                        <h4>Cocktails</h4>
+                        <p>Mixologie créative</p>
+                    </div>
+                    <div class="spec-watermark-new"><i class="fas fa-fan"></i></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== GALLERY ====== -->
+    <section id="gallery" class="section-new gallery-section-new">
+        <div class="container-new">
+            <div class="section-header-new" data-aos="fade-up">
+                <h2 class="section-title-new">NOTRE CAFÉ EN IMAGES</h2>
+                <div class="gold-icon-divider"><i class="fas fa-fan"></i></div>
+            </div>
+
+            <div class="gallery-grid-new">
+                <div class="gal-img-new gal-main-new hover-scale-5" data-aos="fade-right">
+                    <img src="assets/images/interior_stairs.jpg" alt="Main Hall">
+                </div>
+                <div class="gal-stack-new">
+                    <div class="gal-img-new gal-top-new hover-scale-5" data-aos="fade-left" data-aos-delay="100">
+                        <img src="assets/images/window_view.jpg" alt="Window View">
+                    </div>
+                    <div class="gal-img-new gal-bottom-new hover-scale-5" data-aos="fade-left" data-aos-delay="200">
+                        <img src="assets/images/exterior_night.jpg" alt="Exterior">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== DELIVERY SECTION ====== -->
+    <section id="delivery" class="section-new delivery-section-new">
+        <div class="container-new">
+            <div class="section-header-new" data-aos="fade-up">
+                <h2 class="section-title-new">LIVRAISON À DOMICILE</h2>
+                <h3 class="section-subtitle-new">Savourez le château chez vous</h3>
+                <div class="gold-icon-divider"><i class="fas fa-truck"></i></div>
+            </div>
+
+            <div class="delivery-grid">
+                <!-- Item 1 -->
+                <div class="delivery-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="delivery-card-img" style="background-image: url('assets/images/window_view.jpg')"></div>
+                    <div class="delivery-card-content">
+                        <h4 class="delivery-card-title">Café Signature</h4>
+                        <p class="delivery-card-price">4.500 DT</p>
+                        <button class="btn-add-cart" onclick="addToCart('Café Signature', 4.500)">
+                            <i class="fas fa-plus"></i> AJOUTER AU PANIER
+                        </button>
+                    </div>
+                </div>
+                <!-- Item 2 -->
+                <div class="delivery-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="delivery-card-img" style="background-image: url('assets/images/interior_stairs.jpg')"></div>
+                    <div class="delivery-card-content">
+                        <h4 class="delivery-card-title">Brunch Box Duo</h4>
+                        <p class="delivery-card-price">35.000 DT</p>
+                        <button class="btn-add-cart" onclick="addToCart('Brunch Box Duo', 35.000)">
+                            <i class="fas fa-plus"></i> AJOUTER AU PANIER
+                        </button>
+                    </div>
+                </div>
+                <!-- Item 3 -->
+                <div class="delivery-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="delivery-card-img" style="background-image: url('assets/images/exterior_night.jpg')"></div>
+                    <div class="delivery-card-content">
+                        <h4 class="delivery-card-title">Assortiment Pâtissier</h4>
+                        <p class="delivery-card-price">18.000 DT</p>
+                        <button class="btn-add-cart" onclick="addToCart('Assortiment Pâtissier', 18.000)">
+                            <i class="fas fa-plus"></i> AJOUTER AU PANIER
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== CONTACT ====== -->
+    <section id="contact" class="section-new contact-section-new">
+        <div class="container-new">
+            <div class="contact-header-icon" data-aos="fade-up">
+                <div class="gold-icon-divider"><i class="fas fa-envelope-open-text"></i></div>
+            </div>
+            <div class="contact-layout-new">
+                <div class="contact-info-new" data-aos="fade-right">
+                    <h2 class="section-title-new">CONTACTEZ-NOUS</h2>
+                    <p class="contact-desc-new">
+                        Nous serons ravis de vous accueillir ou de répondre à vos demandes pour des événements privés.
+                    </p>
+                    <div class="contact-details-new">
+                        <div class="c-detail-new">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div>
+                                <strong>ADRESSE</strong>
+                                <span>1 Avenue du Château, Le Parc<br>75000 Paris</span>
+                            </div>
+                        </div>
+                        <div class="c-detail-new">
+                            <i class="fas fa-phone-alt"></i>
+                            <div>
+                                <strong>TÉLÉPHONE</strong>
+                                <span>+33 1 23 45 67 89</span>
+                            </div>
+                        </div>
+                        <div class="c-detail-new">
+                            <i class="fas fa-clock"></i>
+                            <div>
+                                <strong>HORAIRES</strong>
+                                <span>Lundi - Dimanche : 08:00 - 23:00</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-form-wrapper-new" data-aos="fade-left">
+                    <form class="simple-form-new" id="reservationForm">
+                        <div class="form-grid-new" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                            <div class="form-group-new">
+                                <label>VOTRE NOM</label>
+                                <input type="text" id="resName" placeholder="Ex: Jean Dupont" required>
+                            </div>
+                            <div class="form-group-new">
+                                <label>VOTRE EMAIL</label>
+                                <input type="email" id="resEmail" placeholder="Ex: jean@exemple.com" required>
+                            </div>
+                            <div class="form-group-new">
+                                <label>DATE</label>
+                                <input type="date" id="resDate" required>
+                            </div>
+                            <div class="form-group-new">
+                                <label>HEURE</label>
+                                <input type="time" id="resTime" required>
+                            </div>
+                            <div class="form-group-new">
+                                <label>PERSONNES</label>
+                                <select id="resGuests" style="width: 100%; background: none; border: 1px solid #ddd; padding: 12px; color: #555;">
+                                    <option value="1">1 Personne</option>
+                                    <option value="2" selected>2 Personnes</option>
+                                    <option value="3">3 Personnes</option>
+                                    <option value="4">4 Personnes</option>
+                                    <option value="5">5 Personnes</option>
+                                    <option value="6+">6+ Personnes</option>
+                                </select>
+                            </div>
+                            <div class="form-group-new">
+                                <label>ZONE PRÉFÉRÉE</label>
+                                <select id="resZone" style="width: 100%; background: none; border: 1px solid #ddd; padding: 12px; color: #555;">
+                                    <option value="Restaurant">Restaurant</option>
+                                    <option value="Café">Café</option>
+                                    <option value="Parc">Parc</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group-new" style="margin-top: 20px;">
+                            <label>NOTES PARTICULIÈRES</label>
+                            <textarea id="resNotes" rows="3" placeholder="Allergies, anniversaire, table spécifique..."></textarea>
+                        </div>
+                        <button type="submit" class="btn-submit-new" id="submitBtn">
+                            CONFIRMER LA RÉSERVATION
+                        </button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="map-full-new" data-aos="fade-up">
+                <div class="map-placeholder-new">
+                    <i class="fas fa-map"></i>
+                    <span>VOIR SUR LA CARTE</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== FOOTER ====== -->
+    <footer class="footer-new">
+        <div class="footer-content-new">
+            <div class="footer-logo-new">
+                THE <span>CASTLE</span> PARK
+            </div>
+            <ul class="footer-links-new">
+                <li><a href="#">Mentions légales</a></li>
+                <li><a href="#">Confidentialité</a></li>
+                <li><a href="#">Presse</a></li>
+                <li><a href="#">Recrutement</a></li>
+            </ul>
+            <p class="footer-copy-new">&copy; 2024 The Castle Park. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Cart Floating Button -->
+    <div class="cart-floating-btn" id="cartBtn" onclick="toggleCart()">
+        <i class="fas fa-shopping-bag"></i>
+        <div class="cart-count-badge" id="cartCount">0</div>
+    </div>
+
+    <!-- Cart Modal -->
+    <div class="cart-modal" id="cartModal">
+        <div class="cart-content-wrapper">
+            <div class="cart-header">
+                <h3>VOTRE PANIER</h3>
+                <button onclick="toggleCart()" style="background:none; border:none; font-size:1.5rem; cursor:pointer;">&times;</button>
+            </div>
+            <div id="cartItemsList" class="cart-items-list">
+                <p style="text-align:center; color:#999;">Votre panier est vide.</p>
+            </div>
+            <div id="cartFooter" style="display:none;">
+                <div style="display:flex; justify-content:space-between; font-weight:700; margin-bottom:20px; border-top:2px solid #eee; padding-top:15px;">
+                    <span>TOTAL</span>
+                    <span id="cartTotal">0.000 DT</span>
+                </div>
+                <form class="checkout-form" id="checkoutForm">
+                    <input type="text" id="orderName" placeholder="Votre Nom complet" required>
+                    <input type="tel" id="orderPhone" placeholder="Votre Téléphone" required>
+                    <input type="text" id="orderAddress" placeholder="Adresse de livraison" required>
+                    <button type="submit" class="btn-order-now" id="btnOrderNow">CONFIRMER LA COMMANDE</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chatbot trigger is intentionally omitted from the new design for a clean look, but can be added back if needed -->
+    <script src="chatbot_premium.js"></script>
+    
+    <!-- AOS -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 1000, easing: 'ease-out-cubic', once: true, offset: 60 });
+
+        // --- INITIALISATION SUPABASE ---
+        const { createClient } = supabase;
+        const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        // --- GESTION DES RÉSERVATIONS ---
+        const reservationForm = document.getElementById('reservationForm');
+        if (reservationForm) {
+            reservationForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const submitBtn = document.getElementById('submitBtn');
+                const originalText = submitBtn.innerText;
+                
+                const data = {
+                    name: document.getElementById('resName').value,
+                    email: document.getElementById('resEmail').value,
+                    notes: document.getElementById('resNotes').value,
+                    date: document.getElementById('resDate').value,
+                    time: document.getElementById('resTime').value,
+                    guests: document.getElementById('resGuests').value,
+                    zone: document.getElementById('resZone').value
+                };
+
+                submitBtn.innerText = "ENVOI EN COURS...";
+                submitBtn.disabled = true;
+
+                try {
+                    const { error } = await supabaseClient.from('reservations').insert([data]);
+                    if (!error) {
+                        alert("✅ Merci ! Votre réservation a été enregistrée avec succès.");
+                        reservationForm.reset();
+                    } else throw error;
+                } catch (error) {
+                    console.error("Erreur:", error);
+                    alert("❌ Erreur: " + error.message);
+                } finally {
+                    submitBtn.innerText = originalText;
+                    submitBtn.disabled = false;
+                }
+            });
+        }
+
+        // --- GESTION DU PANIER & LIVRAISON ---
+        let cart = [];
+
+        function toggleCart() {
+            document.getElementById('cartModal').classList.toggle('open');
+            renderCart();
+        }
+
+        function addToCart(name, price) {
+            const index = cart.findIndex(item => item.name === name);
+            if (index > -1) {
+                cart[index].qty++;
+            } else {
+                cart.push({ name, price, qty: 1 });
+            }
+            updateCartBadge();
+            const btn = document.getElementById('cartBtn');
+            btn.style.transform = 'scale(1.2)';
+            setTimeout(() => btn.style.transform = '', 200);
+        }
+
+        function updateCartBadge() {
+            const count = cart.reduce((sum, item) => sum + item.qty, 0);
+            const badge = document.getElementById('cartCount');
+            const btn = document.getElementById('cartBtn');
+            if (badge) badge.innerText = count;
+            if (btn) btn.style.display = count > 0 ? 'flex' : 'none';
+        }
+
+        function renderCart() {
+            const list = document.getElementById('cartItemsList');
+            const footer = document.getElementById('cartFooter');
+            
+            if (cart.length === 0) {
+                list.innerHTML = '<p style="text-align:center; color:#999;">Votre panier est vide.</p>';
+                footer.style.display = 'none';
+                return;
+            }
+
+            footer.style.display = 'block';
+            let total = 0;
+            list.innerHTML = cart.map(item => {
+                total += item.price * item.qty;
+                return `
+                    <div class="cart-item">
+                        <span><strong>${item.qty}x</strong> ${item.name}</span>
+                        <span>${(item.price * item.qty).toFixed(3)} DT</span>
+                    </div>
+                `;
+            }).join('');
+            document.getElementById('cartTotal').innerText = total.toFixed(3) + ' DT';
+        }
+
+        const checkoutForm = document.getElementById('checkoutForm');
+        if (checkoutForm) {
+            checkoutForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const btn = document.getElementById('btnOrderNow');
+                
+                const orderData = {
+                    customer_name: document.getElementById('orderName').value,
+                    customer_phone: document.getElementById('orderPhone').value,
+                    address: document.getElementById('orderAddress').value,
+                    items: cart,
+                    total: cart.reduce((sum, item) => sum + (item.price * item.qty), 0),
+                    fcm_token: window.fcmToken || null
+                };
+
+                if (!orderData.fcm_token) {
+                    alert("Debug: Aucun token FCM détecté. Les notifications ne marcheront pas.");
+                } else {
+                    console.log("FCM Token détecté:", orderData.fcm_token);
+                }
+
+                btn.innerText = "TRAITEMENT...";
+                btn.disabled = true;
+
+                try {
+                    const { error } = await supabaseClient.from('orders').insert([orderData]);
+                    if (!error) {
+                        alert("🎉 Commande reçue ! Nous préparons votre livraison.");
+                        cart = [];
+                        updateCartBadge();
+                        toggleCart();
+                    } else throw error;
+                } catch (err) {
+                    alert("Erreur: " + err.message);
+                } finally {
+                    btn.innerText = "CONFIRMER LA COMMANDE";
+                    btn.disabled = false;
+                }
+            });
+        }
+        
+        updateCartBadge();
+    </script>
+</body>
+</html>

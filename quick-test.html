@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Connexion - The Castle Park</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d1f1f 100%);
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #D4AF37, #F4E4BC);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            color: #aaa;
+            margin-bottom: 30px;
+        }
+
+        .status {
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .status.loading {
+            background: rgba(255, 193, 7, 0.1);
+            border: 1px solid rgba(255, 193, 7, 0.3);
+            color: #ffc107;
+        }
+
+        .status.online {
+            background: rgba(76, 175, 80, 0.1);
+            border: 1px solid rgba(76, 175, 80, 0.3);
+            color: #4caf50;
+        }
+
+        .status.offline {
+            background: rgba(244, 67, 54, 0.1);
+            border: 1px solid rgba(244, 67, 54, 0.3);
+            color: #f44336;
+        }
+
+        .spinner {
+            width: 24px;
+            height: 24px;
+            border: 3px solid rgba(255, 255, 255, 0.1);
+            border-top-color: currentColor;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        button {
+            width: 100%;
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #D4AF37, #F4E4BC);
+            color: #1a1a1a;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(212, 175, 55, 0.3);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .info {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .info h3 {
+            color: #D4AF37;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        .info p {
+            color: #ccc;
+            line-height: 1.8;
+            margin: 5px 0;
+        }
+
+        .info code {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 3px 8px;
+            border-radius: 4px;
+            color: #4caf50;
+            font-family: 'Courier New', monospace;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>🔌 Test de Connexion</h1>
+        <p class="subtitle">Vérification du backend API</p>
+
+        <div class="status loading" id="status">
+            <div class="spinner"></div>
+            <span id="statusText">Vérification en cours...</span>
+        </div>
+
+        <button onclick="testConnection()">🔄 Retester la Connexion</button>
+
+        <div class="info">
+            <h3>📊 Informations</h3>
+            <p><strong>URL API:</strong> <code id="apiUrl">http://localhost:3000/api</code></p>
+            <p><strong>Statut:</strong> <span id="connectionStatus">En attente...</span></p>
+            <p><strong>Réservations:</strong> <span id="reservationCount">-</span></p>
+            <p><strong>Messages:</strong> <span id="messageCount">-</span></p>
+        </div>
+
+        <div class="info" style="margin-top: 20px;">
+            <h3>✅ Que faire si tout fonctionne?</h3>
+            <p>1. Ouvrez <code>index.html</code> pour tester le formulaire de réservation</p>
+            <p>2. Ouvrez <code>admin-dashboard.html</code> pour voir les réservations</p>
+        </div>
+
+        <div class="info" style="margin-top: 20px;">
+            <h3>❌ En cas d'erreur</h3>
+            <p>1. Vérifiez que le backend est démarré: <code>node server.js</code></p>
+            <p>2. Vérifiez que le port 3000 est disponible</p>
+            <p>3. Consultez la console pour plus de détails</p>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:3000/api';
+
+        async function testConnection() {
+            const statusEl = document.getElementById('status');
+            const statusText = document.getElementById('statusText');
+            const connectionStatus = document.getElementById('connectionStatus');
+            const reservationCount = document.getElementById('reservationCount');
+            const messageCount = document.getElementById('messageCount');
+
+            // Set loading state
+            statusEl.className = 'status loading';
+            statusText.textContent = 'Vérification en cours...';
+            connectionStatus.textContent = 'Test en cours...';
+
+            try {
+                // Test reservations endpoint
+                console.log('Testing reservations endpoint...');
+                const resResponse = await fetch(`${API_BASE}/reservations`);
+                const resData = await resResponse.json();
+
+                console.log('Reservations response:', resData);
+
+                if (resData.success) {
+                    reservationCount.textContent = resData.count || 0;
+                }
+
+                // Test contact endpoint
+                console.log('Testing contact endpoint...');
+                const msgResponse = await fetch(`${API_BASE}/contact`);
+                const msgData = await msgResponse.json();
+
+                console.log('Messages response:', msgData);
+
+                if (msgData.success) {
+                    messageCount.textContent = msgData.count || 0;
+                }
+
+                // Success!
+                statusEl.className = 'status online';
+                statusText.innerHTML = '✅ Connexion réussie! Le backend fonctionne parfaitement.';
+                connectionStatus.innerHTML = '<span style="color: #4caf50;">● ONLINE</span>';
+
+            } catch (error) {
+                console.error('Connection error:', error);
+
+                statusEl.className = 'status offline';
+                statusText.innerHTML = '❌ Erreur de connexion. Le backend ne répond pas.';
+                connectionStatus.innerHTML = '<span style="color: #f44336;">● OFFLINE</span>';
+                reservationCount.textContent = 'Erreur';
+                messageCount.textContent = 'Erreur';
+            }
+        }
+
+        // Test on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            setTimeout(testConnection, 500);
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Loft Lounge - Sidi Bouzid</title>
+    <meta name="description"
+        content="Découvrez The Loft Lounge à Sidi Bouzid. Une ambiance unique, des plats délicieux et un service premium. Pizzas, Burgers, Tacos et plus.">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- Custom Cursor -->
+    <div class="cursor-dot" data-cursor-dot></div>
+    <div class="cursor-outline" data-cursor-outline></div>
+
+    <!-- Background Noise/Gradient -->
+    <div class="bg-noise"></div>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="#" class="logo">The Loft<span>.</span></a>
+            <div class="nav-toggle" id="navToggle">
+                <i class="fas fa-bars"></i>
+            </div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home" class="active">Accueil</a></li>
+                <li><a href="#about">À Propos</a></li>
+                <li><a href="#menu">Menu</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1>Bienvenue au <span class="highlight">Loft Lounge</span></h1>
+            <p>L'élégance rencontre la saveur à Sidi Bouzid.</p>
+            <div class="hero-btns">
+                <button class="btn btn-primary" data-action="view-menu">
+                    <i class="fas fa-utensils"></i> Voir le Menu
+                </button>
+                <button class="btn btn-outline" data-action="book-table">
+                    <i class="fas fa-calendar-check"></i> Réserver
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section about">
+        <div class="container">
+            <div class="section-header">
+                <h2>Notre Histoire</h2>
+                <div class="separator"></div>
+            </div>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>Situé au cœur de Sidi Bouzid, <strong>The Loft Lounge</strong> est bien plus qu'un simple café.
+                        C'est un espace conçu pour la détente, la convivialité et le plaisir des sens.</p>
+                    <p>Que vous veniez pour un café matinal, un déjeuner d'affaires ou une soirée entre amis, notre
+                        ambiance sophistiquée et notre menu varié sauront vous séduire.</p>
+                </div>
+                <div class="about-features">
+                    <div class="feature-card">
+                        <i class="fas fa-coffee"></i>
+                        <h3>Café Premium</h3>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-utensils"></i>
+                        <h3>Cuisine Raffinée</h3>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-music"></i>
+                        <h3>Ambiance Lounge</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Menu Section -->
+    <section id="menu" class="section menu-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Nos Spécialités</h2>
+                <div class="separator"></div>
+                <p>Une sélection de nos meilleurs plats</p>
+            </div>
+
+            <div class="menu-grid">
+                <!-- Item 1 -->
+                <div class="menu-item">
+                    <div class="menu-icon"><i class="fas fa-pizza-slice"></i></div>
+                    <div class="menu-details">
+                        <h3>Pizzas Italiennes</h3>
+                        <p>Pâte fine, ingrédients frais et recettes authentiques.</p>
+                    </div>
+                </div>
+
+                <!-- Item 2 -->
+                <div class="menu-item">
+                    <div class="menu-icon"><i class="fas fa-hamburger"></i></div>
+                    <div class="menu-details">
+                        <h3>Burgers Gourmets</h3>
+                        <p>Viande de qualité, pains artisanaux et sauces maison.</p>
+                    </div>
+                </div>
+
+                <!-- Item 3 -->
+                <div class="menu-item">
+                    <div class="menu-icon"><i class="fas fa-fish"></i></div>
+                    <div class="menu-details">
+                        <h3>Fruits de Mer</h3>
+                        <p>Calamars frits, crevettes et spécialités de la mer.</p>
+                    </div>
+                </div>
+
+                <!-- Item 4 -->
+                <div class="menu-item">
+                    <div class="menu-icon"><i class="fas fa-pepper-hot"></i></div>
+                    <div class="menu-details">
+                        <h3>Tacos & Burritos</h3>
+                        <p>Saveurs mexicaines épicées et généreuses.</p>
+                    </div>
+                </div>
+
+                <!-- Item 5 -->
+                <div class="menu-item">
+                    <div class="menu-icon"><i class="fas fa-bread-slice"></i></div>
+                    <div class="menu-details">
+                        <h3>Sandwichs & Paninis</h3>
+                        <p>Pour une pause déjeuner rapide et savoureuse.</p>
+                    </div>
+                </div>
+
+                <!-- Item 6 -->
+                <div class="menu-item">
+                    <div class="menu-icon"><i class="fas fa-birthday-cake"></i></div>
+                    <div class="menu-details">
+                        <h3>Pâtisseries</h3>
+                        <p>Douceurs sucrées pour accompagner votre café.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-cta">
+                <button class="btn btn-primary" data-action="full-menu">
+                    <i class="fas fa-file-pdf"></i> Voir la Carte Complète
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="section services">
+        <div class="container">
+            <div class="services-wrapper">
+                <div class="service-box">
+                    <i class="fas fa-motorcycle"></i>
+                    <h3>Livraison</h3>
+                    <p>Profitez de nos plats chez vous.</p>
+                </div>
+                <div class="service-box">
+                    <i class="fas fa-shopping-bag"></i>
+                    <h3>À Emporter</h3>
+                    <p>Commandez et récupérez sur place.</p>
+                </div>
+                <div class="service-box">
+                    <i class="fas fa-wifi"></i>
+                    <h3>Wifi Gratuit</h3>
+                    <p>Restez connectés pendant votre visite.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section contact">
+        <div class="container">
+            <div class="contact-container">
+                <div class="contact-info">
+                    <h2>Contactez-nous</h2>
+                    <p>Nous sommes impatients de vous accueillir.</p>
+
+                    <div class="info-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Sidi Bouzid, Tunisie</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-phone"></i>
+                        <span>+216 XX XXX XXX</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>contact@theloftlounge.com</span>
+                    </div>
+
+                    <div class="social-links">
+                        <a href="https://www.facebook.com/profile.php?id=100063636363636" target="_blank"><i
+                                class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+
+                <form class="contact-form" id="contactForm">
+                    <div class="form-group">
+                        <input type="text" name="name" placeholder="Votre Nom" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" name="email" placeholder="Votre Email" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea name="message" placeholder="Votre Message" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-paper-plane"></i> Envoyer
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 The Loft Lounge. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <!-- Modals -->
+    <!-- Booking Modal -->
+    <div class="modal" id="bookingModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-calendar-check"></i> Réserver une Table</h2>
+                <button class="modal-close" data-modal="bookingModal">&times;</button>
+            </div>
+            <form class="modal-form" id="bookingForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Nom complet</label>
+                        <input type="text" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Téléphone</label>
+                        <input type="tel" name="phone" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Date</label>
+                        <input type="date" name="date" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Heure</label>
+                        <input type="time" name="time" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Nombre de personnes</label>
+                    <select name="guests" required>
+                        <option value="">Choisir...</option>
+                        <option value="1">1 personne</option>
+                        <option value="2">2 personnes</option>
+                        <option value="3">3 personnes</option>
+                        <option value="4">4 personnes</option>
+                        <option value="5">5 personnes</option>
+                        <option value="6+">6+ personnes</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Demandes spéciales (optionnel)</label>
+                    <textarea name="notes" rows="3"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-check"></i> Confirmer la Réservation
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Full Menu Modal -->
+    <div class="modal" id="menuModal">
+        <div class="modal-content modal-large">
+            <div class="modal-header">
+                <h2><i class="fas fa-book-open"></i> Notre Carte Complète</h2>
+                <button class="modal-close" data-modal="menuModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="menu-category">
+                    <h3><i class="fas fa-pizza-slice"></i> Pizzas</h3>
+                    <div class="menu-items-list">
+                        <div class="menu-item-detail">
+                            <div class="item-info">
+                                <h4>Margherita</h4>
+                                <p>Tomate, mozzarella, basilic</p>
+                            </div>
+                            <span class="price">12 TND</span>
+                        </div>
+                        <div class="menu-item-detail">
+                            <div class="item-info">
+                                <h4>Regina</h4>
+                                <p>Tomate, mozzarella, jambon, champignons</p>
+                            </div>
+                            <span class="price">15 TND</span>
+                        </div>
+                        <div class="menu-item-detail">
+                            <div class="item-info">
+                                <h4>Végétarienne</h4>
+                                <p>Légumes grillés, fromage, sauce tomate</p>
+                            </div>
+                            <span class="price">14 TND</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-category">
+                    <h3><i class="fas fa-hamburger"></i> Burgers</h3>
+                    <div class="menu-items-list">
+                        <div class="menu-item-detail">
+                            <div class="item-info">
+                                <h4>Classic Burger</h4>
+                                <p>Viande de bœuf, salade, tomate, oignon</p>
+                            </div>
+                            <span class="price">18 TND</span>
+                        </div>
+                        <div class="menu-item-detail">
+                            <div class="item-info">
+                                <h4>Cheese Burger</h4>
+                                <p>Double fromage, bacon, sauce spéciale</p>
+                            </div>
+                            <span class="price">20 TND</span>
+                        </div>
+                        <div class="menu-item-detail">
+                            <div class="item-info">
+                                <h4>Chicken Burger</h4>
+                                <p>Poulet grillé, avocat, sauce ranch</p>
+                            </div>
+                            <span class="price">17 TND</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-category">
+                    <h3><i class="fas fa-pepper-hot"></i> Tacos & Burritos</h3>
+                    <div class="menu-items-list">
+                        <div class="menu-item-detail">
+                            <div class="item-info">
+                                <h4>Tacos Poulet</h4>
+                                <p>Poulet mariné, légumes, sauce épicée</p>
+                            </div>
+                            <span class="price">16 TND</span>
+                        </div>
+                        <div class="menu-item-detail">
+                            <div class="item-info">
+                                <h4>Burrito Bœuf</h4>
+                                <p>Bœuf haché, riz, haricots, fromage</p>
+                            </div>
+                            <span class="price">19 TND</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-category">
+                    <h3><i class="fas fa-coffee"></i> Boissons</h3>
+                    <div class="menu-items-list">
+                        <div class="menu-item-detail">
+                            <div class="item-info">
+                                <h4>Café Espresso</h4>
+                                <p>Café fraîchement moulu</p>
+                            </div>
+                            <span class="price">3 TND</span>
+                        </div>
+                        <div class="menu-item-detail">
+                            <div class="item-info">
+                                <h4>Cappuccino</h4>
+                                <p>Espresso, lait mousseux</p>
+                            </div>
+                            <span class="price">5 TND</span>
+                        </div>
+                        <div class="menu-item-detail">
+                            <div class="item-info">
+                                <h4>Jus Frais</h4>
+                                <p>Orange, citron, ou fruits de saison</p>
+                            </div>
+                            <span class="price">6 TND</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Notification -->
+    <div class="notification" id="notification">
+        <i class="fas fa-check-circle"></i>
+        <span id="notificationText">Message envoyé avec succès!</span>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

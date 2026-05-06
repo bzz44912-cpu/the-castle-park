@@ -1,0 +1,1655 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu Complet - The Castle Park</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lato:wght@300;400;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            /* Premium Color Palette - Light Theme */
+            --sage-green: #3d5a40;
+            --sage-light: #588157;
+            --sage-dark: #344e41;
+            --olive-wall: #a3b18a;
+            --primary-gold: #D4AF37;
+            --gold-light: #E8C968;
+            --gold-accent: #C9A959;
+            --white-marble: #F5F5F0;
+            --white-pure: #FFFFFF;
+            --pink-blossom: #FFB8D1;
+            --pink-soft: #FFC8DD;
+            --pink-vivid: #FF9EC0;
+            --gray-modern: #8B8B8B;
+            --gray-dark: #4A4A4A;
+            --gray-light: #E8E8E8;
+
+            /* Glass Effects - Light Version */
+            --glass-bg: rgba(255, 255, 255, 0.85);
+            --glass-border: rgba(61, 90, 64, 0.2);
+            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+
+            /* Transitions */
+            --transition-fast: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            background: linear-gradient(135deg, var(--white-marble) 0%, var(--white-pure) 50%, #FAF9F5 100%);
+            background-attachment: fixed;
+            color: var(--gray-dark);
+            padding: 0;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+            line-height: 1.7;
+        }
+
+        /* Animated Background with Subtle Patterns */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(circle at 20% 30%, rgba(61, 90, 64, 0.04) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(212, 175, 55, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(221, 161, 94, 0.02) 0%, transparent 50%);
+            z-index: -1;
+            animation: gradientShift 20s ease infinite;
+            pointer-events: none;
+        }
+
+        @keyframes gradientShift {
+
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1) rotate(0deg);
+            }
+
+            50% {
+                opacity: 0.7;
+                transform: scale(1.1) rotate(2deg);
+            }
+        }
+
+        /* ========================================
+           NAVIGATION BAR - Premium Style
+           ======================================== */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(250, 249, 245, 0.92));
+            backdrop-filter: blur(25px) saturate(180%);
+            -webkit-backdrop-filter: blur(25px) saturate(180%);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08),
+                0 2px 8px rgba(61, 90, 64, 0.1),
+                inset 0 -1px 0 rgba(255, 255, 255, 0.8);
+            border-bottom: 3px solid transparent;
+            border-image: linear-gradient(90deg, var(--sage-green), var(--primary-gold), var(--pink-blossom), var(--sage-green)) 1;
+            z-index: 1000;
+            transition: var(--transition);
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        .navbar .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.4rem;
+            font-weight: 700;
+            color: var(--sage-green);
+            letter-spacing: 4px;
+            text-decoration: none;
+            text-transform: uppercase;
+            background: linear-gradient(90deg, var(--sage-green) 0%, var(--primary-gold) 50%, var(--sage-green) 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 2px 8px rgba(61, 90, 64, 0.3));
+            transition: var(--transition);
+            animation: shimmerText 3s linear infinite;
+        }
+
+        .logo:hover {
+            filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.6));
+            transform: scale(1.05);
+        }
+
+        @keyframes shimmerText {
+            0% {
+                background-position: 0% center;
+            }
+
+            100% {
+                background-position: 200% center;
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 32px;
+            font-family: 'Lato', sans-serif;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.9rem;
+            background: linear-gradient(135deg, var(--sage-green), var(--olive-wall));
+            color: var(--white-pure);
+            border: 2px solid var(--sage-green);
+            border-radius: 50px;
+            text-decoration: none;
+            box-shadow: 0 8px 20px rgba(61, 90, 64, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .back-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-gold), var(--gold-light));
+            transform: translate(-50%, -50%);
+            transition: width 0.6s ease, height 0.6s ease;
+            z-index: -1;
+        }
+
+        .back-btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .back-btn:hover {
+            border-color: var(--gold-light);
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 12px 30px rgba(212, 175, 55, 0.4),
+                0 5px 15px rgba(0, 0, 0, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.5);
+        }
+
+        .menu-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 100px 40px 40px;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        /* Premium Header */
+        .menu-header {
+            text-align: center;
+            margin-bottom: 80px;
+            position: relative;
+            padding: 60px 20px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(250, 249, 245, 0.85));
+            backdrop-filter: blur(15px);
+            border-radius: 30px;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.08),
+                inset 0 1px 0 rgba(255, 255, 255, 0.9);
+            border: 2px solid rgba(61, 90, 64, 0.15);
+        }
+
+        .menu-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, var(--primary-gold), var(--pink-blossom), var(--primary-gold), transparent);
+            border-radius: 2px;
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
+        }
+
+        .menu-header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 4.5rem;
+            background: linear-gradient(135deg, var(--sage-green), var(--primary-gold), var(--pink-blossom));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+            letter-spacing: 3px;
+            filter: drop-shadow(0 2px 15px rgba(212, 175, 55, 0.3));
+            animation: glowPulse 4s ease-in-out infinite;
+        }
+
+        @keyframes glowPulse {
+
+            0%,
+            100% {
+                filter: drop-shadow(0 2px 15px rgba(212, 175, 55, 0.3));
+            }
+
+            50% {
+                filter: drop-shadow(0 4px 25px rgba(212, 175, 55, 0.5));
+            }
+        }
+
+        .menu-header p {
+            font-size: 1.4rem;
+            color: var(--sage-green);
+            font-style: italic;
+            font-weight: 400;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* Glassmorphism Category Cards - Light Theme */
+        .menu-category {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.92), rgba(250, 249, 245, 0.88));
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 3px solid var(--glass-border);
+            border-left: 10px solid var(--primary-gold);
+            border-radius: 24px;
+            padding: 50px;
+            margin-bottom: 60px;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08),
+                0 2px 8px rgba(0, 0, 0, 0.04),
+                inset 0 1px 0 rgba(255, 255, 255, 0.9);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            animation: slideInUp 0.6s ease-out backwards;
+        }
+
+        .menu-category::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg,
+                    transparent,
+                    var(--pink-blossom),
+                    var(--primary-gold),
+                    var(--sage-green),
+                    var(--primary-gold),
+                    var(--pink-blossom),
+                    transparent);
+            background-size: 200% 100%;
+            animation: shimmer 4s linear infinite;
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: -200% 0;
+            }
+
+            100% {
+                background-position: 200% 0;
+            }
+        }
+
+        .menu-category:hover {
+            transform: translateY(-8px) scale(1.01);
+            box-shadow: 0 20px 60px rgba(212, 175, 55, 0.25),
+                0 8px 20px rgba(0, 0, 0, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 1);
+            border-left-color: var(--sage-green);
+            border-color: rgba(61, 90, 64, 0.3);
+        }
+
+        /* Category Header */
+        .category-header {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            margin-bottom: 45px;
+            padding-bottom: 25px;
+            border-bottom: 2px solid rgba(61, 90, 64, 0.2);
+            position: relative;
+        }
+
+        .category-header::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-gold), var(--pink-blossom), var(--sage-green));
+            transition: width 0.8s ease;
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.4);
+        }
+
+        .menu-category:hover .category-header::after {
+            width: 100%;
+        }
+
+        .category-icon {
+            width: 85px;
+            height: 85px;
+            background: linear-gradient(135deg, var(--sage-green), var(--olive-wall), var(--primary-gold));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.4rem;
+            color: var(--white-pure);
+            flex-shrink: 0;
+            box-shadow: 0 10px 30px rgba(61, 90, 64, 0.3),
+                inset 0 2px 5px rgba(255, 255, 255, 0.3);
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            position: relative;
+        }
+
+        .category-icon::before {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border-radius: 50%;
+            padding: 4px;
+            background: linear-gradient(45deg, var(--primary-gold), var(--pink-blossom), var(--sage-green));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.3s;
+            animation: rotateGradient 3s linear infinite;
+        }
+
+        @keyframes rotateGradient {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .menu-category:hover .category-icon {
+            transform: rotate(360deg) scale(1.15);
+        }
+
+        .menu-category:hover .category-icon::before {
+            opacity: 1;
+        }
+
+        .category-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.8rem;
+            color: var(--sage-green);
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-shadow: 0 2px 10px rgba(61, 90, 64, 0.2);
+        }
+
+        /* Subcategory */
+        .subcategory {
+            margin-bottom: 40px;
+        }
+
+        .subcategory-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--sage-green);
+            margin-bottom: 25px;
+            padding: 18px 30px;
+            border-left: 6px solid var(--pink-blossom);
+            background: linear-gradient(135deg, rgba(221, 161, 94, 0.12), rgba(61, 90, 64, 0.08));
+            border-radius: 0 15px 15px 0;
+            display: inline-block;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 4px 15px rgba(221, 161, 94, 0.15);
+            transition: var(--transition-fast);
+        }
+
+        .subcategory-title:hover {
+            transform: translateX(10px);
+            border-left-color: var(--primary-gold);
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.25);
+        }
+
+        .subcategory-title i {
+            color: var(--primary-gold);
+            margin-right: 12px;
+            font-size: 1.8rem;
+        }
+
+        /* Menu Items Grid */
+        .menu-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 20px;
+        }
+
+        /* Premium Menu Item Cards */
+        .menu-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px 32px;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 18px;
+            border-left: 5px solid var(--sage-green);
+            border: 2px solid rgba(61, 90, 64, 0.2);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .menu-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg,
+                    transparent,
+                    rgba(212, 175, 55, 0.15),
+                    transparent);
+            transition: left 0.5s ease;
+        }
+
+        .menu-item:hover::before {
+            left: 100%;
+        }
+
+        .menu-item:hover {
+            background: rgba(255, 255, 255, 0.9);
+            border-left-color: var(--primary-gold);
+            border-left-width: 6px;
+            border-color: rgba(212, 175, 55, 0.4);
+            transform: translateX(12px) scale(1.02);
+            box-shadow: 0 8px 30px rgba(212, 175, 55, 0.25),
+                0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .item-name {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--gray-dark);
+            position: relative;
+            z-index: 1;
+            transition: color 0.3s;
+        }
+
+        .menu-item:hover .item-name {
+            color: var(--sage-green);
+        }
+
+        .item-price {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-gold);
+            white-space: nowrap;
+            margin-left: 20px;
+            position: relative;
+            z-index: 1;
+            text-shadow: 0 2px 8px rgba(212, 175, 55, 0.2);
+            transition: all 0.3s;
+        }
+
+        .menu-item:hover .item-price {
+            color: var(--sage-green);
+            transform: scale(1.1);
+            text-shadow: 0 2px 12px rgba(61, 90, 64, 0.3);
+        }
+
+        .item-price::after {
+            content: ' DT';
+            font-size: 0.82em;
+            opacity: 0.85;
+        }
+
+        /* Special Items - Premium Highlight */
+        .special-item {
+            background: linear-gradient(135deg,
+                    rgba(212, 175, 55, 0.18),
+                    rgba(221, 161, 94, 0.12));
+            border-left-color: var(--primary-gold);
+            border-left-width: 6px;
+            border-color: rgba(212, 175, 55, 0.35);
+            box-shadow: 0 6px 25px rgba(212, 175, 55, 0.25),
+                inset 0 1px 0 rgba(255, 255, 255, 0.6);
+            animation: specialGlow 2.5s ease-in-out infinite;
+        }
+
+        @keyframes specialGlow {
+
+            0%,
+            100% {
+                box-shadow: 0 6px 25px rgba(212, 175, 55, 0.25),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+            }
+
+            50% {
+                box-shadow: 0 10px 35px rgba(212, 175, 55, 0.4),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+            }
+        }
+
+        .special-item .item-name {
+            color: var(--primary-gold);
+            font-weight: 700;
+            font-size: 1.25rem;
+        }
+
+        .special-item .item-name::before {
+            content: '⭐';
+            margin-right: 10px;
+            font-size: 1.1em;
+            animation: starTwinkle 1.5s ease-in-out infinite;
+        }
+
+        @keyframes starTwinkle {
+
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1) rotate(0deg);
+            }
+
+            50% {
+                opacity: 0.7;
+                transform: scale(1.3) rotate(15deg);
+            }
+        }
+
+        .special-item:hover {
+            background: linear-gradient(135deg,
+                    rgba(212, 175, 55, 0.28),
+                    rgba(221, 161, 94, 0.2));
+            box-shadow: 0 12px 45px rgba(212, 175, 55, 0.45),
+                0 6px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        /* Entrance Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Cascade Animation Delays */
+        .menu-category:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .menu-category:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .menu-category:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        .menu-category:nth-child(4) {
+            animation-delay: 0.4s;
+        }
+
+        .menu-category:nth-child(5) {
+            animation-delay: 0.5s;
+        }
+
+        .menu-category:nth-child(6) {
+            animation-delay: 0.6s;
+        }
+
+        .menu-category:nth-child(7) {
+            animation-delay: 0.7s;
+        }
+
+        .menu-category:nth-child(8) {
+            animation-delay: 0.8s;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .menu-container {
+                padding: 100px 30px 30px;
+            }
+
+            .menu-items {
+                grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            }
+
+            .category-icon {
+                width: 75px;
+                height: 75px;
+                font-size: 2.2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar .container {
+                padding: 0 20px;
+            }
+
+            .logo {
+                font-size: 1.8rem;
+                letter-spacing: 2px;
+            }
+
+            .back-btn {
+                padding: 12px 24px;
+                font-size: 0.8rem;
+                letter-spacing: 1.5px;
+            }
+
+            .menu-container {
+                padding: 90px 20px 25px;
+            }
+
+            .menu-header {
+                padding: 40px 20px;
+                margin-bottom: 50px;
+                border-radius: 20px;
+            }
+
+            .menu-header h1 {
+                font-size: 2.8rem;
+                letter-spacing: 2px;
+            }
+
+            .menu-header p {
+                font-size: 1.1rem;
+                letter-spacing: 2px;
+            }
+
+            .menu-category {
+                padding: 35px 25px;
+                margin-bottom: 40px;
+                border-radius: 20px;
+                border-left-width: 6px;
+            }
+
+            .category-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .category-icon {
+                width: 70px;
+                height: 70px;
+                font-size: 2rem;
+            }
+
+            .category-header h2 {
+                font-size: 2.2rem;
+                letter-spacing: 1px;
+            }
+
+            .subcategory-title {
+                font-size: 1.7rem;
+                padding: 14px 22px;
+            }
+
+            .subcategory-title i {
+                font-size: 1.6rem;
+            }
+
+            .menu-items {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+
+            .menu-item {
+                padding: 20px 24px;
+                border-radius: 16px;
+            }
+
+            .item-name {
+                font-size: 1.08rem;
+            }
+
+            .item-price {
+                font-size: 1.35rem;
+            }
+
+            .special-item .item-name {
+                font-size: 1.18rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 1.5rem;
+            }
+
+            .back-btn {
+                padding: 10px 20px;
+                font-size: 0.75rem;
+                gap: 8px;
+            }
+
+            .back-btn i {
+                font-size: 0.9rem;
+            }
+
+            .menu-container {
+                padding: 80px 15px 20px;
+            }
+
+            .menu-header {
+                padding: 30px 15px;
+                border-radius: 16px;
+            }
+
+            .menu-header h1 {
+                font-size: 2.2rem;
+                letter-spacing: 1px;
+            }
+
+            .menu-header p {
+                font-size: 0.95rem;
+                letter-spacing: 1.5px;
+            }
+
+            .menu-category {
+                padding: 25px 18px;
+                border-radius: 16px;
+                border-left-width: 5px;
+            }
+
+            .category-header h2 {
+                font-size: 1.9rem;
+            }
+
+            .category-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 1.6rem;
+            }
+
+            .subcategory-title {
+                font-size: 1.5rem;
+                padding: 12px 18px;
+                border-left-width: 4px;
+            }
+
+            .menu-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+                padding: 18px 20px;
+            }
+
+            .item-price {
+                margin-left: 0;
+                font-size: 1.3rem;
+            }
+
+            .special-item .item-name {
+                font-size: 1.12rem;
+            }
+        }
+
+        /* Print Styles - Light Theme */
+        @media print {
+            body {
+                background: white;
+                color: black;
+            }
+
+            .navbar {
+                display: none;
+            }
+
+            .menu-container {
+                padding: 20px;
+            }
+
+            .menu-category {
+                page-break-inside: avoid;
+                background: white;
+                border: 3px solid var(--sage-green);
+                box-shadow: none;
+            }
+
+            .menu-item {
+                background: #f9f9f9;
+                box-shadow: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation Bar Premium -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="logo">Castle Park<span>.</span></a>
+            <a href="index.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i> Retour à l'Accueil
+            </a>
+        </div>
+    </nav>
+
+    <div class="menu-container">
+        <div class="menu-header">
+            <h1>Notre Menu Complet</h1>
+            <p>The Castle Park - <a href="https://maps.app.goo.gl/2MVquQtkWmLYrJnx5" target="_blank" style="color: inherit; text-decoration: underline; text-underline-offset: 3px; cursor: pointer;" title="Voir sur Google Maps">Sidi Bouzid</a></p>
+        </div>
+
+        <!-- CUISINE SALÉE -->
+        <div class="menu-category">
+            <div class="category-header">
+                <div class="category-icon"><i class="fas fa-egg"></i></div>
+                <h2>Cuisine Salée</h2>
+            </div>
+
+            <div class="subcategory">
+                <h3 class="subcategory-title"><i class="fas fa-egg"></i> Omelette</h3>
+                <div class="menu-items">
+                    <div class="menu-item">
+                        <span class="item-name">Nature</span>
+                        <span class="item-price">6500</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Jambon</span>
+                        <span class="item-price">7200</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Thon</span>
+                        <span class="item-price">8000</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Thon Jambon</span>
+                        <span class="item-price">9000</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Marocain (escalope grillée, champignon)</span>
+                        <span class="item-price">11000</span>
+                    </div>
+                    <div class="menu-item special-item">
+                        <span class="item-name">⭐ The Castle</span>
+                        <span class="item-price">13000</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="subcategory">
+                <h3 class="subcategory-title"><i class="fas fa-bacon"></i> Crêpe Salée</h3>
+                <div class="menu-items">
+                    <div class="menu-item">
+                        <span class="item-name">Jambon</span>
+                        <span class="item-price">8500</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Thon</span>
+                        <span class="item-price">9000</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Tunisienne (avec œuf)</span>
+                        <span class="item-price">9500</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Marocain (escalope grillée, champignon)</span>
+                        <span class="item-price">12000</span>
+                    </div>
+                    <div class="menu-item special-item">
+                        <span class="item-name">⭐ The Castle</span>
+                        <span class="item-price">14000</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- BOULES BOURGEOIS -->
+        <div class="menu-category">
+            <div class="category-header">
+                <div class="category-icon"><i class="fas fa-cookie-bite"></i></div>
+                <h2>Boules Bourgeois</h2>
+            </div>
+
+            <div class="subcategory">
+                <h3 class="subcategory-title">14 Boules</h3>
+                <div class="menu-items">
+                    <div class="menu-item">
+                        <span class="item-name">Chocolat</span>
+                        <span class="item-price">10000</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Caramel</span>
+                        <span class="item-price">10000</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Pistache</span>
+                        <span class="item-price">11000</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Nutella</span>
+                        <span class="item-price">11500</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Nutella Banane</span>
+                        <span class="item-price">13500</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Nutella Fruits Secs</span>
+                        <span class="item-price">13500</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Nutella Banane Fruits Secs</span>
+                        <span class="item-price">14000</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Lotus</span>
+                        <span class="item-price">14000</span>
+                    </div>
+                    <div class="menu-item special-item">
+                        <span class="item-name">⭐ The Castle</span>
+                        <span class="item-price">15500</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="subcategory">
+                <h3 class="subcategory-title">21 Boules</h3>
+                <div class="menu-items">
+                    <div class="menu-item">
+                        <span class="item-name">Chocolat</span>
+                        <span class="item-price">12000</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Caramel</span>
+                        <span class="item-price">12000</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Pistache</span>
+                        <span class="item-price">13000</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Nutella</span>
+                        <span class="item-price">13500</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Nutella Fruits Secs</span>
+                        <span class="item-price">15500</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Nutella Banane</span>
+                        <span class="item-price">15500</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Nutella Banane Fruits Secs</span>
+                        <span class="item-price">16000</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Lotus</span>
+                        <span class="item-price">16000</span>
+                    </div>
+                    <div class="menu-item special-item">
+                        <span class="item-name">⭐ The Castle</span>
+                        <span class="item-price">18500</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- JWAJEM -->
+        <div class="menu-category">
+            <div class="category-header">
+                <div class="category-icon"><i class="fas fa-candy-cane"></i></div>
+                <h2>Jwajem</h2>
+            </div>
+            <div class="menu-items">
+                <div class="menu-item">
+                    <span class="item-name">Mini</span>
+                    <span class="item-price">8500</span>
+                </div>
+                <div class="menu-item">
+                    <span class="item-name">Chocolat</span>
+                    <span class="item-price">9500</span>
+                </div>
+                <div class="menu-item">
+                    <span class="item-name">Nutella</span>
+                    <span class="item-price">10500</span>
+                </div>
+                <div class="menu-item">
+                    <span class="item-name">Caramel</span>
+                    <span class="item-price">10500</span>
+                </div>
+                <div class="menu-item">
+                    <span class="item-name">Pistache</span>
+                    <span class="item-price">10500</span>
+                </div>
+                <div class="menu-item">
+                    <span class="item-name">Lotus</span>
+                    <span class="item-price">12500</span>
+                </div>
+                <div class="menu-item special-item">
+                    <span class="item-name">⭐ The Castle</span>
+                    <span class="item-price">17000</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- PLAT FRUITS DE SAISON -->
+        <div class="menu-category">
+            <div class="category-header">
+                <div class="category-icon"><i class="fas fa-apple-alt"></i></div>
+                <h2>Plat Fruits de Saison</h2>
+            </div>
+            <div class="menu-items">
+                <div class="menu-item">
+                    <span class="item-name">Mini</span>
+                    <span class="item-price">8500</span>
+                </div>
+                <div class="menu-item special-item">
+                    <span class="item-name">⭐ The Castle</span>
+                    <span class="item-price">13000</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- BOISSONS FROIDES -->
+        <div class="menu-category">
+            <div class="category-header">
+                <div class="category-icon"><i class="fas fa-glass-whiskey"></i></div>
+                <h2>Boissons Froides (Cold Drinks)</h2>
+            </div>
+
+            <div class="subcategory">
+                <h3 class="subcategory-title"><i class="fas fa-mug-hot"></i> Café Américain Froid</h3>
+                <div class="menu-items">
+                    <div class="menu-item">
+                        <span class="item-name">Normal</span>
+                        <span class="item-price">4000</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Fruits de la Passion</span>
+                        <span class="item-price">5500</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Pêche</span>
+                        <span class="item-price">5500</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="subcategory">
+                <h3 class="subcategory-title"><i class="fas fa-leaf"></i> Thé Froid</h3>
+                <div class="menu-items">
+                    <div class="menu-item">
+                        <span class="item-name">Citron</span>
+                        <span class="item-price">6000</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Mangue</span>
+                        <span class="item-price">6000</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Pêche</span>
+                        <span class="item-price">6000</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Fruits de la Passion</span>
+                        <span class="item-price">7200</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Myrtille</span>
+                        <span class="item-price">7200</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="subcategory">
+                <h3 class="subcategory-title"><i class="fas fa-coffee"></i> Café Froid</h3>
+                <div class="menu-items">
+                    <div class="menu-item">
+                        <span class="item-name">Normal (sans arôme)</span>
+                        <span class="item-price">7000</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Noisette</span>
+                        <span class="item-price">8000</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Caramel</span>
+                        <span class="item-price">8000</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Vanille</span>
+                        <span class="item-price">8000</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="subcategory">
+                <h3 class="subcategory-title"><i class="fas fa-ice-cream"></i> Affogato</h3>
+                <div class="menu-items">
+                    <div class="menu-item">
+                        <span class="item-name">Chocolat</span>
+                        <span class="item-price">6500</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Caramel</span>
+                        <span class="item-price">6500</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Vanille</span>
+                        <span class="item-price">6500</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Fraise</span>
+                        <span class="item-price">7000</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Pistache</span>
+                        <span class="item-price">7500</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="subcategory">
+                <h3 class="subcategory-title"><i class="fas fa-ice-cream"></i> Glaces</h3>
+                <div class="menu-items">
+                    <div class="menu-item">
+                        <span class="item-name">2 Boules</span>
+                        <span class="item-price">6200</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">3 Boules</span>
+                        <span class="item-price">8500</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Banana Split</span>
+                        <span class="item-price">10000</span>
+                    </div>
+                    <div class="menu-item special-item">
+                        <span class="item-name">⭐ The Castle</span>
+                        <span class="item-price">15000</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- VIENNOISERIE -->
+        <div class="menu-category">
+            <div class="category-header">
+                <div class="category-icon"><i class="fas fa-bread-slice"></i></div>
+                <h2>Viennoiserie</h2>
+            </div>
+            <div class="menu-items">
+                <div class="menu-item">
+                    <span class="item-name">Cake</span>
+                    <span class="item-price">3000</span>
+                </div>
+                <div class="menu-item">
+                    <span class="item-name">Croissant</span>
+                    <span class="item-price">3500</span>
+                </div>
+                <div class="menu-item">
+                    <span class="item-name">Croissant Farcie Salée</span>
+                    <span class="item-price">6500</span>
+                </div>
+                <div class="menu-item">
+                    <span class="item-name">Croissant Farcie Sucrée</span>
+                    <span class="item-price">6500</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- SUPPLÉMENTS -->
+        <div class="menu-category">
+            <div class="category-header">
+                <div class="category-icon"><i class="fas fa-plus-circle"></i></div>
+                <h2>Suppléments</h2>
+            </div>
+            <div class="menu-items">
+                <div class="menu-item">
+                    <span class="item-name">Arôme</span>
+                    <span class="item-price">2000</span>
+                </div>
+                <div class="menu-item">
+                    <span class="item-name">Nestlé</span>
+                    <span class="item-price">2000</span>
+                </div>
+                <div class="menu-item">
+                    <span class="item-name">Chantilly</span>
+                    <span class="item-price">2000</span>
+                </div>
+                <div class="menu-item">
+                    <span class="item-name">Glaçon</span>
+                    <span class="item-price">2000</span>
+                </div>
+                <div class="menu-item">
+                    <span class="item-name">Fruits</span>
+                    <span class="item-price">4000</span>
+                </div>
+                <div class="menu-item">
+                    <span class="item-name">Fruits Secs</span>
+                    <span class="item-price">4000</span>
+                </div>
+                <div class="menu-item">
+                    <span class="item-name">Chicha Fakher</span>
+                    <span class="item-price">10000</span>
+                </div>
+                <div class="menu-item">
+                    <span class="item-name">Chicha Adalya</span>
+                    <span class="item-price">12000</span>
+                </div>
+                <div class="menu-item special-item">
+                    <span class="item-name">⭐ The Castle (glaçon, fruits)</span>
+                    <span class="item-price">17000</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- MILKSHAKE & CUISINE SUCRÉE -->
+        <div class="menu-category">
+            <div class="category-header">
+                <div class="category-icon"><i class="fas fa-blender"></i></div>
+                <h2>Milkshake & Cuisine Sucrée</h2>
+            </div>
+
+            <div class="subcategory">
+                <h3 class="subcategory-title"><i class="fas fa-glass-martini"></i> Milkshake</h3>
+                <div class="menu-items">
+                    <div class="menu-item">
+                        <span class="item-name">Caramel Vanille</span>
+                        <span class="item-price">9000</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Pistache</span>
+                        <span class="item-price">9000</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Fraise</span>
+                        <span class="item-price">9000</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Mocha Café</span>
+                        <span class="item-price">9000</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Oreo</span>
+                        <span class="item-price">9500</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Nutella</span>
+                        <span class="item-price">9500</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Lotus</span>
+                        <span class="item-price">11000</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="subcategory">
+                <h3 class="subcategory-title"><i class="fas fa-cookie"></i> Crêpe Sucrée</h3>
+                <div class="menu-items">
+                    <div class="menu-item">
+                        <span class="item-name">Chocolat</span>
+                        <span class="item-price">9500</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Caramel</span>
+                        <span class="item-price">10000</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Oreo</span>
+                        <span class="item-price">10000</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Brownies</span>
+                        <span class="item-price">10500</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Pistache</span>
+                        <span class="item-price">10500</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Nutella</span>
+                        <span class="item-price">11500</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Nutella Fruits Secs</span>
+                        <span class="item-price">13000</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Nutella Banane</span>
+                        <span class="item-price">13000</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Lotus</span>
+                        <span class="item-price">13000</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Nutella Banane Fruits Secs</span>
+                        <span class="item-price">14000</span>
+                    </div>
+                    <div class="menu-item special-item">
+                        <span class="item-name">⭐ The Castle</span>
+                        <span class="item-price">16000</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="subcategory">
+                <h3 class="subcategory-title"><i class="fas fa-layer-group"></i> Pancake</h3>
+                <div class="menu-items">
+                    <div class="menu-item">
+                        <span class="item-name">Chocolat</span>
+                        <span class="item-price">10000</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Caramel</span>
+                        <span class="item-price">11000</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Pistache</span>
+                        <span class="item-price">11000</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Oreo</span>
+                        <span class="item-price">11000</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Nutella</span>
+                        <span class="item-price">12000</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Nutella Fruits Secs</span>
+                        <span class="item-price">13500</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Nutella Banane</span>
+                        <span class="item-price">13500</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Lotus</span>
+                        <span class="item-price">13500</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Nutella Banane Fruits Secs</span>
+                        <span class="item-price">14000</span>
+                    </div>
+                    <div class="menu-item special-item">
+                        <span class="item-name">⭐ The Castle</span>
+                        <span class="item-price">17000</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- BOISSONS CHAUDES -->
+        <div class="menu-category">
+            <div class="category-header">
+                <div class="category-icon"><i class="fas fa-mug-hot"></i></div>
+                <h2>Boissons Chaudes (Hot Drinks)</h2>
+            </div>
+
+            <div class="subcategory">
+                <h3 class="subcategory-title"><i class="fas fa-coffee"></i> Expresso & Café</h3>
+                <div class="menu-items">
+                    <div class="menu-item">
+                        <span class="item-name">Expresso</span>
+                        <span class="item-price">2800</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Expresso Américain</span>
+                        <span class="item-price">3000</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Cappuccino</span>
+                        <span class="item-price">3200</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Direct</span>
+                        <span class="item-price">3400</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Café au Lait</span>
+                        <span class="item-price">3600</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Nescafé</span>
+                        <span class="item-price">4000</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Café Turc</span>
+                        <span class="item-price">6000</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Latte</span>
+                        <span class="item-price">6300</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Cappuccino</span>
+                        <span class="item-price">6300</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="subcategory">
+                <h3 class="subcategory-title"><i class="fas fa-mug-hot"></i> Chocolat Chaud</h3>
+                <div class="menu-items">
+                    <div class="menu-item">
+                        <span class="item-name">Normal</span>
+                        <span class="item-price">5000</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Aromatisé</span>
+                        <span class="item-price">7500</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Hot Pistache</span>
+                        <span class="item-price">8500</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Hot Nutella</span>
+                        <span class="item-price">8500</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Hot Lotus</span>
+                        <span class="item-price">9500</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Spéciale (fruits secs)</span>
+                        <span class="item-price">10500</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="subcategory">
+                <h3 class="subcategory-title"><i class="fas fa-leaf"></i> Thé Vert</h3>
+                <div class="menu-items">
+                    <div class="menu-item">
+                        <span class="item-name">Normal</span>
+                        <span class="item-price">2500</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Infusion</span>
+                        <span class="item-price">3500</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Kiyufi</span>
+                        <span class="item-price">3500</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Baglewa</span>
+                        <span class="item-price">7500</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Amandes</span>
+                        <span class="item-price">7500</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Pignon</span>
+                        <span class="item-price">9200</span>
+                    </div>
+                    <div class="menu-item special-item">
+                        <span class="item-name">⭐ The Castle</span>
+                        <span class="item-price">12500</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PETIT DÉJEUNER -->
+        <div class="menu-category">
+            <div class="category-header">
+                <div class="category-icon"><i class="fas fa-sun"></i></div>
+                <h2>Petit Déjeuner</h2>
+            </div>
+
+            <div class="menu-items" style="grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));">
+                <div class="menu-item">
+                    <div>
+                        <div class="item-name" style="font-size: 1.3rem; margin-bottom: 10px;">Express</div>
+                        <div style="font-size: 0.9rem; color: #666;">Café au choix, Jus, Croissant ou Cake, Eau</div>
+                    </div>
+                    <span class="item-price">8500</span>
+                </div>
+                <div class="menu-item">
+                    <div>
+                        <div class="item-name" style="font-size: 1.3rem; margin-bottom: 10px;">Kids</div>
+                        <div style="font-size: 0.9rem; color: #666;">Café au Lait, Croissant, Jus, Yaourt, Eau, Grains
+                            d'Or</div>
+                    </div>
+                    <span class="item-price">10000</span>
+                </div>
+                <div class="menu-item">
+                    <div>
+                        <div class="item-name" style="font-size: 1.3rem; margin-bottom: 10px;">French</div>
+                        <div style="font-size: 0.9rem; color: #666;">Café au choix, Jus, Croissant ou Cake, Eau, Pancake
+                            ou Boules Bourgeois</div>
+                    </div>
+                    <span class="item-price">12500</span>
+                </div>
+                <div class="menu-item">
+                    <div>
+                        <div class="item-name" style="font-size: 1.3rem; margin-bottom: 10px;">Americain</div>
+                        <div style="font-size: 0.9rem; color: #666;">Café au choix, Jus, Croissant ou Cake, Eau,
+                            Omelette, Charcuterie</div>
+                    </div>
+                    <span class="item-price">13000</span>
+                </div>
+                <div class="menu-item">
+                    <div>
+                        <div class="item-name" style="font-size: 1.3rem; margin-bottom: 10px;">Whatsapp</div>
+                        <div style="font-size: 0.9rem; color: #666;">Café au choix, Jus, Croissant ou Cake, Eau,
+                            Omelette, Pancake ou Boules Bourgeois, Yaourt</div>
+                    </div>
+                    <span class="item-price">18000</span>
+                </div>
+                <div class="menu-item special-item">
+                    <div>
+                        <div class="item-name" style="font-size: 1.3rem; margin-bottom: 10px;">⭐ The Castle</div>
+                        <div style="font-size: 0.9rem; color: #666;">2 Cafés au choix, 2 Jus, 2 Croissants ou Cakes, 1L
+                            d\'Eau, 2 Yaourts, 2 Salades de Fruits, Boules Bourgeois, 2 Omelettes, Charcuterie</div>
+                    </div>
+                    <span class="item-price">32000</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- BRUNCH -->
+        <div class="menu-category">
+            <div class="category-header">
+                <div class="category-icon"><i class="fas fa-utensils"></i></div>
+                <h2>Service avec les Ramequins (Brunch)</h2>
+            </div>
+
+            <div class="menu-items" style="grid-template-columns: 1fr;">
+                <div class="menu-item special-item" style="padding: 30px;">
+                    <div>
+                        <div class="item-name" style="font-size: 1.5rem; margin-bottom: 15px;">🍽️ Brunch 2 Personnes
+                        </div>
+                        <div style="font-size: 1rem; color: #666; line-height: 1.8;">
+                            2 Cafés au choix, 2 Jus, 2 Croissants ou Cakes, 1L d'Eau, 2 Yaourts, 2 Salades de Fruits,
+                            Boules Bourgeois, 2 Omelettes, Charcuterie, Ojja, Merguez, Saucisses, Nuggets, Escalope
+                            Panée, Toast Sandwich, Mlaoui
+                        </div>
+                    </div>
+                    <span class="item-price" style="font-size: 1.8rem;">45000</span>
+                </div>
+                <div class="menu-item special-item" style="padding: 30px;">
+                    <div>
+                        <div class="item-name" style="font-size: 1.5rem; margin-bottom: 15px;">🍽️ Brunch 4 Personnes
+                        </div>
+                        <div style="font-size: 1rem; color: #666; line-height: 1.8;">
+                            4 Cafés au choix, 4 Jus, 2 Croissants, 2 Cakes, 2L d'Eau, 4 Yaourts, 4 Salades de Fruits, 2
+                            Boules Bourgeois, 2 Omelettes, 2 Croissants Farcis, Charcuterie, Ojja, Merguez, Saucisses,
+                            Nuggets, Escalope Panée, 2 Toasts Sandwich, Mlaoui
+                        </div>
+                    </div>
+                    <span class="item-price" style="font-size: 1.8rem;">58000</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+
+</html>

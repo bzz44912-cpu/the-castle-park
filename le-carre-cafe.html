@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Le Carré Café – Experience Elegance, Savor Moments</title>
+    <meta name="description" content="Le Carré Café – Un espace de gastronomie raffinée, une ambiance épurée et chic à la française.">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- AOS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="le-carre-cafe.css">
+</head>
+
+<body>
+
+    <!-- ====== PRELOADER ====== -->
+    <div class="preloader" id="preloader">
+        <div class="preloader-inner">
+            <div class="preloader-logo">Le Carré</div>
+            <div class="preloader-bar"><div class="preloader-fill"></div></div>
+        </div>
+    </div>
+
+    <!-- ====== CURSOR ====== -->
+    <div class="cursor-dot" id="cursorDot"></div>
+    <div class="cursor-outline" id="cursorOutline"></div>
+
+    <!-- ====== NAVBAR ====== -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#home" class="nav-logo">
+                <span class="logo-line">Le</span>
+                <span class="logo-main">Carré</span>
+                <span class="logo-sub">Café</span>
+            </a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home" class="nav-link active">Accueil</a></li>
+                <li><a href="#story" class="nav-link">Notre Histoire</a></li>
+                <li><a href="#menu" class="nav-link">Menu</a></li>
+                <li><a href="#gallery" class="nav-link">Galerie</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+            <a href="#contact" class="nav-cta">Réserver</a>
+            <button class="nav-toggle" id="navToggle" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- ====== HERO ====== -->
+    <section id="home" class="hero">
+        <div class="hero-bg">
+            <div class="hero-overlay"></div>
+            <!-- Marble texture -->
+            <div class="marble-texture"></div>
+        </div>
+
+        <!-- Animated floating blobs -->
+        <div class="blob blob-rose"></div>
+        <div class="blob blob-teal"></div>
+        <div class="blob blob-grey"></div>
+
+        <div class="hero-content">
+            <p class="hero-eyebrow" data-aos="fade-down" data-aos-duration="1000">Bienvenue au</p>
+            <h1 class="hero-title" data-aos="fade-up" data-aos-duration="1200" data-aos-delay="100">
+                Le Carré<br><em>Café</em>
+            </h1>
+            <div class="hero-divider" data-aos="zoom-in" data-aos-duration="800" data-aos-delay="300"></div>
+            <p class="hero-tagline" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="400">
+                Experience Elegance,<br>Savor Moments.
+            </p>
+            <div class="hero-actions" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="600">
+                <a href="#contact" class="btn btn-hero-primary">
+                    <i class="fas fa-calendar-check"></i> Réserver une Table
+                </a>
+                <a href="#menu" class="btn btn-hero-outline">
+                    Découvrir le Menu <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="hero-scroll">
+            <div class="scroll-line"></div>
+            <span>Défiler</span>
+        </div>
+    </section>
+
+    <!-- ====== FEATURES BAR ====== -->
+    <div class="features-bar">
+        <div class="features-container">
+            <div class="feature-pill" data-aos="fade-up" data-aos-delay="100">
+                <i class="fas fa-leaf"></i>
+                <span>Produits Frais & Locaux</span>
+            </div>
+            <div class="feature-sep"></div>
+            <div class="feature-pill" data-aos="fade-up" data-aos-delay="200">
+                <i class="fas fa-wifi"></i>
+                <span>WiFi Haut Débit</span>
+            </div>
+            <div class="feature-sep"></div>
+            <div class="feature-pill" data-aos="fade-up" data-aos-delay="300">
+                <i class="fas fa-clock"></i>
+                <span>Ouvert 8h – 23h</span>
+            </div>
+            <div class="feature-sep"></div>
+            <div class="feature-pill" data-aos="fade-up" data-aos-delay="400">
+                <i class="fas fa-star"></i>
+                <span>Expérience Premium</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====== STORY SECTION ====== -->
+    <section id="story" class="section story">
+        <div class="story-bg-blur"></div>
+        <div class="story-container">
+            <div class="story-visual" data-aos="fade-right" data-aos-duration="1200">
+                <div class="arch-window">
+                    <div class="arch-window-inner">
+                        <div class="arch-decor-top"></div>
+                        <div class="arch-content">
+                            <div class="arch-img-placeholder">
+                                <div class="arch-pattern"></div>
+                                <div class="arch-center-text">
+                                    <span>EST.</span>
+                                    <strong>2024</strong>
+                                    <span>Sidi Bouzid</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Floating card -->
+                    <div class="story-float-card">
+                        <i class="fas fa-award"></i>
+                        <div>
+                            <strong>Meilleur Café</strong>
+                            <span>de la Région</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="story-text" data-aos="fade-left" data-aos-duration="1200" data-aos-delay="200">
+                <p class="section-eyebrow">Notre Histoire</p>
+                <h2 class="section-title">Un Refuge de<br><em>Raffinement</em></h2>
+                <div class="gold-divider"></div>
+                <p class="story-body">
+                    Niché au cœur de Sidi Bouzid, <strong>Le Carré Café</strong> est né d'une vision : 
+                    créer un espace où le design d'exception rencontre une hospitalité sincère.
+                </p>
+                <p class="story-body">
+                    Nos hauts plafonds lumineux, nos chaises velours, nos tables en marbre et nos 
+                    arches élégantes composent un cadre digne des meilleures adresses parisiennes.
+                </p>
+                <div class="story-stats">
+                    <div class="stat">
+                        <strong>500+</strong>
+                        <span>Clients / Jour</span>
+                    </div>
+                    <div class="stat-sep"></div>
+                    <div class="stat">
+                        <strong>50+</strong>
+                        <span>Spécialités</span>
+                    </div>
+                    <div class="stat-sep"></div>
+                    <div class="stat">
+                        <strong>2</strong>
+                        <span>Étages & Terrasse</span>
+                    </div>
+                </div>
+                <a href="#gallery" class="btn btn-story">
+                    Découvrir l'Espace <i class="fas fa-long-arrow-alt-right"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== WOOD FLUTING SEPARATOR ====== -->
+    <div class="fluting-separator">
+        <div class="fluting-inner">
+            <div class="fluting-text">
+                <span>☙</span> L'Art de Vivre à la Française <span>❧</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====== MENU HIGHLIGHTS ====== -->
+    <section id="menu" class="section menu-section">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <p class="section-eyebrow">Notre Carte</p>
+                <h2 class="section-title">Saveurs <em>d'Exception</em></h2>
+                <div class="gold-divider center"></div>
+                <p class="section-sub">Une sélection culinaire inspirée de la Méditerranée et de la tradition française</p>
+            </div>
+
+            <div class="menu-tabs" data-aos="fade-up" data-aos-delay="100">
+                <button class="tab active" data-tab="boissons">Boissons</button>
+                <button class="tab" data-tab="food">Cuisine</button>
+                <button class="tab" data-tab="desserts">Desserts</button>
+            </div>
+
+            <div class="menu-pane active" id="tab-boissons">
+                <div class="menu-luxury-grid">
+                    <div class="menu-luxury-item" data-aos="fade-up" data-aos-delay="100">
+                        <div class="mli-icon"><i class="fas fa-coffee"></i></div>
+                        <div class="mli-body">
+                            <h4>Espresso Signature</h4>
+                            <p>Blend maison, arômes de noisette & cacao</p>
+                        </div>
+                        <span class="mli-price">3 TND</span>
+                    </div>
+                    <div class="menu-luxury-item" data-aos="fade-up" data-aos-delay="150">
+                        <div class="mli-icon"><i class="fas fa-mug-hot"></i></div>
+                        <div class="mli-body">
+                            <h4>Cappuccino de Paris</h4>
+                            <p>Espresso, lait velouté, mousse fine</p>
+                        </div>
+                        <span class="mli-price">5 TND</span>
+                    </div>
+                    <div class="menu-luxury-item" data-aos="fade-up" data-aos-delay="200">
+                        <div class="mli-icon"><i class="fas fa-blender"></i></div>
+                        <div class="mli-body">
+                            <h4>Smoothie Riviera</h4>
+                            <p>Fruits de saison, yaourt grec, miel de fleurs</p>
+                        </div>
+                        <span class="mli-price">7 TND</span>
+                    </div>
+                    <div class="menu-luxury-item" data-aos="fade-up" data-aos-delay="250">
+                        <div class="mli-icon"><i class="fas fa-glass-whiskey"></i></div>
+                        <div class="mli-body">
+                            <h4>Limonade Méditerranée</h4>
+                            <p>Citron frais, basilic, eau pétillante</p>
+                        </div>
+                        <span class="mli-price">5 TND</span>
+                    </div>
+                    <div class="menu-luxury-item" data-aos="fade-up" data-aos-delay="300">
+                        <div class="mli-icon"><i class="fas fa-leaf"></i></div>
+                        <div class="mli-body">
+                            <h4>Thé Marocain</h4>
+                            <p>Menthe fraîche, eau de fleur d'oranger</p>
+                        </div>
+                        <span class="mli-price">4 TND</span>
+                    </div>
+                    <div class="menu-luxury-item" data-aos="fade-up" data-aos-delay="350">
+                        <div class="mli-icon"><i class="fas fa-ice-cream"></i></div>
+                        <div class="mli-body">
+                            <h4>Milkshake Artisanal</h4>
+                            <p>Glace maison, chantilly vanille, coulis</p>
+                        </div>
+                        <span class="mli-price">7 TND</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CUISINE TAB -->
+            <div class="menu-pane" id="tab-food">
+                <div class="menu-luxury-grid">
+                    <div class="menu-luxury-item" data-aos="fade-up" data-aos-delay="100">
+                        <div class="mli-icon"><i class="fas fa-egg"></i></div>
+                        <div class="mli-body">
+                            <h4>Omelette Méditerranée</h4>
+                            <p>Œufs frais, feta, tomates confites, herbes</p>
+                        </div>
+                        <span class="mli-price">9 TND</span>
+                    </div>
+                    <div class="menu-luxury-item" data-aos="fade-up" data-aos-delay="150">
+                        <div class="mli-icon"><i class="fas fa-bread-slice"></i></div>
+                        <div class="mli-body">
+                            <h4>Club Sandwich Carré</h4>
+                            <p>Poulet grillé, avocat, bacon, pain de mie toasté</p>
+                        </div>
+                        <span class="mli-price">12 TND</span>
+                    </div>
+                    <div class="menu-luxury-item" data-aos="fade-up" data-aos-delay="200">
+                        <div class="mli-icon"><i class="fas fa-pizza-slice"></i></div>
+                        <div class="mli-body">
+                            <h4>Pizza Bianca</h4>
+                            <p>Mozzarella, roquette, jambon, huile de truffe</p>
+                        </div>
+                        <span class="mli-price">16 TND</span>
+                    </div>
+                    <div class="menu-luxury-item" data-aos="fade-up" data-aos-delay="250">
+                        <div class="mli-icon"><i class="fas fa-hamburger"></i></div>
+                        <div class="mli-body">
+                            <h4>Burger Signature</h4>
+                            <p>Bœuf 180g, cheddar affiné, sauce secrète maison</p>
+                        </div>
+                        <span class="mli-price">14 TND</span>
+                    </div>
+                    <div class="menu-luxury-item" data-aos="fade-up" data-aos-delay="300">
+                        <div class="mli-icon"><i class="fas fa-fish"></i></div>
+                        <div class="mli-body">
+                            <h4>Salade Niçoise</h4>
+                            <p>Thon frais, olives, haricots verts, vinaigrette</p>
+                        </div>
+                        <span class="mli-price">11 TND</span>
+                    </div>
+                    <div class="menu-luxury-item" data-aos="fade-up" data-aos-delay="350">
+                        <div class="mli-icon"><i class="fas fa-utensils"></i></div>
+                        <div class="mli-body">
+                            <h4>Tacos Français</h4>
+                            <p>Poulet mariné, fromage fondu, sauce fromagère</p>
+                        </div>
+                        <span class="mli-price">13 TND</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DESSERTS TAB -->
+            <div class="menu-pane" id="tab-desserts">
+                <div class="menu-luxury-grid">
+                    <div class="menu-luxury-item" data-aos="fade-up" data-aos-delay="100">
+                        <div class="mli-icon"><i class="fas fa-birthday-cake"></i></div>
+                        <div class="mli-body">
+                            <h4>Tiramisu Maison</h4>
+                            <p>Mascarpone, biscuit café, cacao amer grand cru</p>
+                        </div>
+                        <span class="mli-price">8 TND</span>
+                    </div>
+                    <div class="menu-luxury-item" data-aos="fade-up" data-aos-delay="150">
+                        <div class="mli-icon"><i class="fas fa-cookie-bite"></i></div>
+                        <div class="mli-body">
+                            <h4>Fondant Chocolat</h4>
+                            <p>Coulant chocolat noir 70%, glace vanille bourbon</p>
+                        </div>
+                        <span class="mli-price">9 TND</span>
+                    </div>
+                    <div class="menu-luxury-item" data-aos="fade-up" data-aos-delay="200">
+                        <div class="mli-icon"><i class="fas fa-ice-cream"></i></div>
+                        <div class="mli-body">
+                            <h4>Boules Artisanales</h4>
+                            <p>3 boules au choix, coulis fruits rouges ou caramel</p>
+                        </div>
+                        <span class="mli-price">7 TND</span>
+                    </div>
+                    <div class="menu-luxury-item" data-aos="fade-up" data-aos-delay="250">
+                        <div class="mli-icon"><i class="fas fa-concierge-bell"></i></div>
+                        <div class="mli-body">
+                            <h4>Crêpe Suzette</h4>
+                            <p>Crêpe fine, beurre d'orange, sucre glace, chantilly</p>
+                        </div>
+                        <span class="mli-price">7 TND</span>
+                    </div>
+                    <div class="menu-luxury-item" data-aos="fade-up" data-aos-delay="300">
+                        <div class="mli-icon"><i class="fas fa-apple-alt"></i></div>
+                        <div class="mli-body">
+                            <h4>Salade de Fruits Frais</h4>
+                            <p>Fruits de saison, menthe fraîche, sirop de fleur</p>
+                        </div>
+                        <span class="mli-price">6 TND</span>
+                    </div>
+                    <div class="menu-luxury-item" data-aos="fade-up" data-aos-delay="350">
+                        <div class="mli-icon"><i class="fas fa-star"></i></div>
+                        <div class="mli-body">
+                            <h4>Gâteau du Jour</h4>
+                            <p>Création du chef pâtissier, selon arrivage</p>
+                        </div>
+                        <span class="mli-price">7 TND</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-cta" data-aos="fade-up">
+                <a href="#contact" class="btn btn-primary">
+                    <i class="fas fa-calendar-check"></i> Réserver une Table
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== GALLERY ====== -->
+    <section id="gallery" class="section gallery-section">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <p class="section-eyebrow">Notre Univers</p>
+                <h2 class="section-title">Le Carré <em>en Images</em></h2>
+                <div class="gold-divider center"></div>
+            </div>
+
+            <div class="gallery-masonry">
+                <!-- Marble table close-up -->
+                <div class="gallery-card card-tall" data-aos="fade-up" data-aos-delay="100">
+                    <div class="gallery-card-bg marble-bg"></div>
+                    <div class="gallery-card-overlay">
+                        <span>Tables en Marbre</span>
+                        <i class="fas fa-expand-alt"></i>
+                    </div>
+                    <div class="gallery-label">Mobilier</div>
+                </div>
+                <!-- Velvet chairs -->
+                <div class="gallery-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="gallery-card-bg velvet-bg"></div>
+                    <div class="gallery-card-overlay">
+                        <span>Chaises Velours</span>
+                        <i class="fas fa-expand-alt"></i>
+                    </div>
+                    <div class="gallery-label">Intérieur</div>
+                </div>
+                <!-- Terrace -->
+                <div class="gallery-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="gallery-card-bg terrace-bg"></div>
+                    <div class="gallery-card-overlay">
+                        <span>Terrasse Extérieure</span>
+                        <i class="fas fa-expand-alt"></i>
+                    </div>
+                    <div class="gallery-label">Terrasse</div>
+                </div>
+                <!-- Main hall -->
+                <div class="gallery-card card-wide" data-aos="fade-up" data-aos-delay="400">
+                    <div class="gallery-card-bg hall-bg"></div>
+                    <div class="gallery-card-overlay">
+                        <span>Grande Salle</span>
+                        <i class="fas fa-expand-alt"></i>
+                    </div>
+                    <div class="gallery-label">Architecture</div>
+                </div>
+                <!-- Arched Windows -->
+                <div class="gallery-card" data-aos="fade-up" data-aos-delay="500">
+                    <div class="gallery-card-bg arch-bg"></div>
+                    <div class="gallery-card-overlay">
+                        <span>Arches & Lumière</span>
+                        <i class="fas fa-expand-alt"></i>
+                    </div>
+                    <div class="gallery-label">Décor</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== TESTIMONIALS ====== -->
+    <section class="section testimonials">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <p class="section-eyebrow">Avis Clients</p>
+                <h2 class="section-title">Ce qu'ils <em>Disent</em></h2>
+                <div class="gold-divider center"></div>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="t-stars">★★★★★</div>
+                    <p>"Le Carré est une pépite. L'ambiance, la déco, le service... tout est à la hauteur d'une adresse parisienne."</p>
+                    <div class="t-author">
+                        <div class="t-avatar">S</div>
+                        <div>
+                            <strong>Sarah B.</strong>
+                            <span>Cliente Régulière</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card featured" data-aos="fade-up" data-aos-delay="200">
+                    <div class="t-stars">★★★★★</div>
+                    <p>"Les chaises en velours, les tables en marbre... on se sent dans un autre monde. Et le cappuccino est divin !"</p>
+                    <div class="t-author">
+                        <div class="t-avatar">M</div>
+                        <div>
+                            <strong>Mohamed A.</strong>
+                            <span>Entrepreneur & Visiteur</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="t-stars">★★★★★</div>
+                    <p>"Un endroit parfait pour des réunions d'affaires. Cadre élégant, wifi excellent, équipe attentionnée."</p>
+                    <div class="t-author">
+                        <div class="t-avatar">L</div>
+                        <div>
+                            <strong>Leila K.</strong>
+                            <span>Architecte</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== CONTACT ====== -->
+    <section id="contact" class="section contact-section">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <p class="section-eyebrow">Nous Rejoindre</p>
+                <h2 class="section-title">Réserver <em>une Table</em></h2>
+                <div class="gold-divider center"></div>
+            </div>
+
+            <div class="contact-grid">
+                <!-- Reservation Form -->
+                <div class="contact-form-card" data-aos="fade-right" data-aos-duration="1100">
+                    <div class="form-gold-accent top"></div>
+                    <h3>Faire une Réservation</h3>
+                    <form class="luxury-form" id="reservationForm">
+                        <div class="form-row">
+                            <div class="form-field">
+                                <label><i class="fas fa-user"></i> Nom Complet</label>
+                                <input type="text" id="resName" placeholder="Votre nom complet..." required>
+                            </div>
+                            <div class="form-field">
+                                <label><i class="fas fa-phone"></i> Téléphone</label>
+                                <input type="tel" id="resPhone" placeholder="+216 xx xxx xxx" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-field">
+                                <label><i class="fas fa-calendar"></i> Date</label>
+                                <input type="date" id="resDate" required>
+                            </div>
+                            <div class="form-field">
+                                <label><i class="fas fa-clock"></i> Heure</label>
+                                <input type="time" id="resTime" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-field">
+                                <label><i class="fas fa-users"></i> Nombre de Personnes</label>
+                                <select id="resGuests" required>
+                                    <option value="">Choisir...</option>
+                                    <option value="1">1 Personne</option>
+                                    <option value="2">2 Personnes</option>
+                                    <option value="3">3 Personnes</option>
+                                    <option value="4">4 Personnes</option>
+                                    <option value="5">5 Personnes</option>
+                                    <option value="6+">6+ Personnes</option>
+                                </select>
+                            </div>
+                            <div class="form-field">
+                                <label><i class="fas fa-star"></i> Occasion</label>
+                                <select id="resOccasion">
+                                    <option value="">Aucune occasion particulière</option>
+                                    <option value="anniversaire">🎂 Anniversaire</option>
+                                    <option value="romantique">💑 Dîner Romantique</option>
+                                    <option value="affaires">💼 Réunion d'Affaires</option>
+                                    <option value="famille">👨‍👩‍👧 Repas en Famille</option>
+                                    <option value="celebration">🥂 Célébration</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-field">
+                            <label><i class="fas fa-comment-alt"></i> Demandes Spéciales</label>
+                            <textarea id="resNotes" rows="3" placeholder="Régime alimentaire, décoration, chaise bébé..."></textarea>
+                        </div>
+                        <div class="form-actions-row">
+                            <button type="submit" class="btn btn-form-submit" id="submitBtn">
+                                <i class="fas fa-calendar-check"></i> Confirmer
+                            </button>
+                            <button type="button" class="btn btn-whatsapp" id="whatsappBtn">
+                                <i class="fab fa-whatsapp"></i> WhatsApp
+                            </button>
+                        </div>
+                    </form>
+                    <div class="form-gold-accent bottom"></div>
+                </div>
+
+                <!-- Info Panel -->
+                <div class="contact-info-panel" data-aos="fade-left" data-aos-duration="1100" data-aos-delay="150">
+                    <div class="info-card">
+                        <div class="info-icon-wrap"><i class="fas fa-map-marker-alt"></i></div>
+                        <div>
+                            <h4>Adresse</h4>
+                            <p>Cité Yassminet, Sidi Bouzid<br>Tunisie, 9100</p>
+                        </div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon-wrap"><i class="fas fa-phone"></i></div>
+                        <div>
+                            <h4>Téléphone</h4>
+                            <p>+216 94 443 814</p>
+                        </div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon-wrap"><i class="fas fa-clock"></i></div>
+                        <div>
+                            <h4>Horaires</h4>
+                            <p>Lundi – Dimanche<br><strong>08:00 – 23:00</strong></p>
+                        </div>
+                    </div>
+
+                    <div class="map-frame">
+                        <iframe src="https://maps.google.com/maps?q=Sidi+Bouzid,+Tunisia&t=&z=14&ie=UTF8&iwloc=&output=embed"
+                            width="100%" height="200" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                    </div>
+
+                    <div class="social-row">
+                        <a href="https://www.facebook.com/p/The-castle-park-61561417901326/" target="_blank" class="social-btn fb">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://www.instagram.com/thecastle.park/" target="_blank" class="social-btn ig">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== FOOTER ====== -->
+    <footer class="luxury-footer">
+        <div class="footer-marble-top"></div>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <span class="logo-line">Le</span>
+                <span class="logo-main">Carré</span>
+                <span class="logo-sub">Café</span>
+            </div>
+            <p class="footer-tagline">Experience Elegance, Savor Moments.</p>
+            <div class="footer-divider"></div>
+            <p class="footer-copy">&copy; 2024 Le Carré Café. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <!-- AOS -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 1000, easing: 'ease-out-cubic', once: true, offset: 60 });
+
+        // Preloader
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('preloader').classList.add('hidden');
+            }, 1800);
+        });
+
+        // Custom Cursor
+        const dot = document.getElementById('cursorDot');
+        const outline = document.getElementById('cursorOutline');
+        let mouseX = 0, mouseY = 0, outX = 0, outY = 0;
+        document.addEventListener('mousemove', e => {
+            mouseX = e.clientX; mouseY = e.clientY;
+            dot.style.transform = `translate(${mouseX}px, ${mouseY}px)`;
+        });
+        function animateCursor() {
+            outX += (mouseX - outX) * 0.12;
+            outY += (mouseY - outY) * 0.12;
+            outline.style.transform = `translate(${outX}px, ${outY}px)`;
+            requestAnimationFrame(animateCursor);
+        }
+        animateCursor();
+        document.querySelectorAll('a, button').forEach(el => {
+            el.addEventListener('mouseenter', () => outline.classList.add('hovered'));
+            el.addEventListener('mouseleave', () => outline.classList.remove('hovered'));
+        });
+
+        // Navbar scroll
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            nav.classList.toggle('scrolled', window.scrollY > 60);
+            // Active link
+            document.querySelectorAll('.nav-link').forEach(link => {
+                const target = document.querySelector(link.getAttribute('href'));
+                if (target) {
+                    const rect = target.getBoundingClientRect();
+                    link.classList.toggle('active', rect.top <= 100 && rect.bottom > 100);
+                }
+            });
+        });
+
+        // Mobile menu
+        document.getElementById('navToggle').addEventListener('click', () => {
+            document.getElementById('navLinks').classList.toggle('open');
+            document.getElementById('navToggle').classList.toggle('open');
+        });
+
+        // Tabs
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.menu-pane').forEach(p => p.classList.remove('active'));
+                tab.classList.add('active');
+                const pane = document.getElementById('tab-' + tab.dataset.tab);
+                if (pane) pane.classList.add('active');
+            });
+        });
+
+        // Form submit
+        document.getElementById('reservationForm').addEventListener('submit', e => {
+            e.preventDefault();
+            const btn = document.getElementById('submitBtn');
+            btn.innerHTML = '<i class="fas fa-check"></i> Confirmée !';
+            btn.style.background = 'linear-gradient(135deg, #3b6b6c, #588B8B)';
+            setTimeout(() => {
+                btn.innerHTML = '<i class="fas fa-calendar-check"></i> Confirmer';
+                btn.style.background = '';
+                e.target.reset();
+            }, 3000);
+        });
+
+        // WhatsApp button
+        document.getElementById('whatsappBtn').addEventListener('click', () => {
+            const name = document.getElementById('resName').value || 'Non renseigné';
+            const phone = document.getElementById('resPhone').value || 'Non renseigné';
+            const date = document.getElementById('resDate').value || 'Non renseignée';
+            const time = document.getElementById('resTime').value || 'Non renseignée';
+            const guests = document.getElementById('resGuests').value || 'Non renseigné';
+            const occasion = document.getElementById('resOccasion').value || 'Aucune';
+            const notes = document.getElementById('resNotes').value || 'Aucune';
+            const msg = `🌹 *Réservation – Le Carré Café*%0A%0A👤 *Nom:* ${name}%0A📞 *Tél:* ${phone}%0A📅 *Date:* ${date}%0A⏰ *Heure:* ${time}%0A👥 *Personnes:* ${guests}%0A🎉 *Occasion:* ${occasion}%0A📝 *Notes:* ${notes}`;
+            window.open(`https://wa.me/21694443814?text=${msg}`, '_blank');
+        });
+    </script>
+</body>
+</html>

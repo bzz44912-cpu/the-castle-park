@@ -1,0 +1,320 @@
+<!-- Shopping Cart Modal -->
+<div class="modal" id="cartModal">
+    <div class="modal-content modal-large">
+        <div class="modal-header">
+            <h2><i class="fas fa-shopping-cart"></i> Mon Panier</h2>
+            <button class="modal-close" data-modal="cartModal">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div id="cartItems" class="cart-items-container">
+                <!-- Cart items will be dynamically inserted here -->
+            </div>
+            <div class="cart-empty" id="cartEmpty" style="display: none;">
+                <i class="fas fa-shopping-cart"></i>
+                <p>Votre panier est vide</p>
+                <button class="btn btn-primary" onclick="closeModal('cartModal')">
+                    <i class="fas fa-utensils"></i> Voir le Menu
+                </button>
+            </div>
+            <div class="cart-summary" id="cartSummary" style="display: none;">
+                <div class="summary-row">
+                    <span>Sous-total:</span>
+                    <span id="subtotal">0 TND</span>
+                </div>
+                <div class="summary-row">
+                    <span>Livraison:</span>
+                    <span id="deliveryFee">0 TND</span>
+                </div>
+                <div class="summary-row total">
+                    <span>Total:</span>
+                    <span id="totalPrice">0 TND</span>
+                </div>
+                <button class="btn btn-outline btn-block" id="proceedToCheckout">
+                    <i class="fas fa-credit-card"></i> Passer la Commande
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Checkout Modal -->
+<div class="modal" id="checkoutModal">
+    <div class="modal-content modal-large">
+        <div class="modal-header">
+            <h2><i class="fas fa-cash-register"></i> Finaliser la Commande</h2>
+            <button class="modal-close" data-modal="checkoutModal">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="checkout-container">
+                <!-- Step Indicator -->
+                <div class="checkout-steps">
+                    <div class="step active" data-step="1">
+                        <div class="step-number">1</div>
+                        <div class="step-label">Informations</div>
+                    </div>
+                    <div class="step" data-step="2">
+                        <div class="step-number">2</div>
+                        <div class="step-label">Livraison</div>
+                    </div>
+                    <div class="step" data-step="3">
+                        <div class="step-number">3</div>
+                        <div class="step-label">Paiement</div>
+                    </div>
+                </div>
+
+                <!-- Step 1: Customer Information -->
+                <div class="checkout-step-content" id="step1" style="display: block;">
+                    <h3><i class="fas fa-user"></i> Vos Informations</h3>
+                    <form id="customerInfoForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Nom complet *</label>
+                                <input type="text" name="fullName" required placeholder="Ex: Ahmed Ben Ali">
+                            </div>
+                            <div class="form-group">
+                                <label>Téléphone *</label>
+                                <input type="tel" name="phone" required placeholder="Ex: 20 123 456">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Email (optionnel)</label>
+                            <input type="email" name="email" placeholder="Ex: ahmed@example.com">
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">
+                            <i class="fas fa-arrow-right"></i> Suivant
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Step 2: Delivery Options -->
+                <div class="checkout-step-content" id="step2" style="display: none;">
+                    <h3><i class="fas fa-shipping-fast"></i> Mode de Livraison</h3>
+                    <div class="delivery-options">
+                        <div class="delivery-option" data-delivery="collect">
+                            <input type="radio" name="deliveryMethod" id="collect" value="collect">
+                            <label for="collect">
+                                <div class="option-icon"><i class="fas fa-hand-holding-heart"></i></div>
+                                <div class="option-details">
+                                    <h4>Click & Collect</h4>
+                                    <p>Retrait sur place - Gratuit</p>
+                                </div>
+                                <div class="option-price">0 TND</div>
+                            </label>
+                        </div>
+                        <div class="delivery-option" data-delivery="delivery">
+                            <input type="radio" name="deliveryMethod" id="delivery" value="delivery" checked>
+                            <label for="delivery">
+                                <div class="option-icon"><i class="fas fa-motorcycle"></i></div>
+                                <div class="option-details">
+                                    <h4>Livraison à Domicile</h4>
+                                    <p>30-45 minutes</p>
+                                </div>
+                                <div class="option-price">3 TND</div>
+                            </label>
+                        </div>
+                    </div>
+                    <div id="addressForm" class="address-form">
+                        <div class="form-group">
+                            <label>Adresse de livraison *</label>
+                            <input type="text" name="address" id="deliveryAddress" required
+                                placeholder="Ex: Rue de la République, Sidi Bouzid">
+                        </div>
+                        <div class="form-group">
+                            <label>Instructions de livraison (optionnel)</label>
+                            <textarea name="deliveryNotes" rows="2"
+                                placeholder="Ex: Sonnez au 2ème étage, code 1234"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button class="btn btn-outline" onclick="goToCheckoutStep(1)">
+                            <i class="fas fa-arrow-left"></i> Retour
+                        </button>
+                        <button class="btn btn-primary" onclick="goToCheckoutStep(3)">
+                            <i class="fas fa-arrow-right"></i> Suivant
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Step 3: Payment Method -->
+                <div class="checkout-step-content" id="step3" style="display: none;">
+                    <h3><i class="fas fa-credit-card"></i> Mode de Paiement</h3>
+
+                    <!-- Order Summary -->
+                    <div class="order-summary-mini">
+                        <h4>Récapitulatif</h4>
+                        <div class="summary-line">
+                            <span>Articles:</span>
+                            <span id="checkoutSubtotal">0 TND</span>
+                        </div>
+                        <div class="summary-line">
+                            <span>Livraison:</span>
+                            <span id="checkoutDelivery">0 TND</span>
+                        </div>
+                        <div class="summary-line total-line">
+                            <span>Total à payer:</span>
+                            <span id="checkoutTotal">0 TND</span>
+                        </div>
+                    </div>
+
+                    <div class="payment-methods">
+                        <!-- D17 Payment -->
+                        <div class="payment-method" data-payment="d17">
+                            <input type="radio" name="paymentMethod" id="paymentD17" value="d17">
+                            <label for="paymentD17">
+                                <div class="payment-icon">
+                                    <i class="fas fa-mobile-alt"></i>
+                                </div>
+                                <div class="payment-details">
+                                    <h4>D17 Mobile</h4>
+                                    <p>Paiement mobile sécurisé</p>
+                                </div>
+                                <div class="payment-badge-small">
+                                    <i class="fas fa-shield-alt"></i> Sécurisé
+                                </div>
+                            </label>
+                        </div>
+
+                        <!-- Card Payment -->
+                        <div class="payment-method" data-payment="card">
+                            <input type="radio" name="paymentMethod" id="paymentCard" value="card">
+                            <label for="paymentCard">
+                                <div class="payment-icon">
+                                    <i class="fas fa-credit-card"></i>
+                                </div>
+                                <div class="payment-details">
+                                    <h4>Carte Bancaire</h4>
+                                    <p>VISA, Mastercard</p>
+                                </div>
+                                <div class="payment-logos-small">
+                                    <i class="fab fa-cc-visa"></i>
+                                    <i class="fab fa-cc-mastercard"></i>
+                                </div>
+                            </label>
+                        </div>
+
+                        <!-- Cash on Delivery -->
+                        <div class="payment-method" data-payment="cash">
+                            <input type="radio" name="paymentMethod" id="paymentCash" value="cash" checked>
+                            <label for="paymentCash">
+                                <div class="payment-icon">
+                                    <i class="fas fa-money-bill-wave"></i>
+                                </div>
+                                <div class="payment-details">
+                                    <h4>Paiement à la Livraison</h4>
+                                    <p>En espèces au livreur</p>
+                                </div>
+                                <div class="payment-badge-small success">
+                                    <i class="fas fa-check"></i> Disponible
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Payment Forms -->
+                    <div id="d17PaymentForm" class="payment-form" style="display: none;">
+                        <h4><i class="fas fa-mobile-alt"></i> Paiement D17</h4>
+                        <div class="form-group">
+                            <label>Numéro de téléphone D17 *</label>
+                            <input type="tel" name="d17Phone" placeholder="20 123 456" pattern="[0-9]{8}">
+                            <small>Vous recevrez une notification D17 pour confirmer le paiement</small>
+                        </div>
+                    </div>
+
+                    <div id="cardPaymentForm" class="payment-form" style="display: none;">
+                        <h4><i class="fas fa-credit-card"></i> Informations de Carte</h4>
+                        <div class="card-input-container">
+                            <div class="form-group">
+                                <label>Numéro de carte *</label>
+                                <input type="text" name="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19"
+                                    id="cardNumber">
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Date d'expiration *</label>
+                                    <input type="text" name="cardExpiry" placeholder="MM/AA" maxlength="5"
+                                        id="cardExpiry">
+                                </div>
+                                <div class="form-group">
+                                    <label>CVV *</label>
+                                    <input type="text" name="cardCVV" placeholder="123" maxlength="3" id="cardCVV">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Nom sur la carte *</label>
+                                <input type="text" name="cardName" placeholder="AHMED BEN ALI">
+                            </div>
+                            <div class="secure-payment-info">
+                                <i class="fas fa-lock"></i>
+                                <span>Paiement 100% sécurisé avec cryptage SSL</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="cashPaymentInfo" class="payment-form" style="display: block;">
+                        <div class="info-box">
+                            <i class="fas fa-info-circle"></i>
+                            <div>
+                                <h4>Paiement en espèces</h4>
+                                <p>Vous payerez directement au livreur lors de la réception de votre commande.
+                                    Assurez-vous d'avoir le montant exact.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button class="btn btn-outline" onclick="goToCheckoutStep(2)">
+                            <i class="fas fa-arrow-left"></i> Retour
+                        </button>
+                        <button class="btn btn-primary btn-large" id="finalizeOrderBtn">
+                            <i class="fas fa-check-circle"></i> Confirmer la Commande
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Order Confirmation Modal -->
+<div class="modal" id="orderConfirmModal">
+    <div class="modal-content">
+        <div class="modal-header success-header">
+            <h2><i class="fas fa-check-circle"></i> Commande Confirmée!</h2>
+            <button class="modal-close" data-modal="orderConfirmModal">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="order-confirmation">
+                <div class="confirmation-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h3>Merci pour votre commande!</h3>
+                <div class="order-number">
+                    <span>Numéro de commande:</span>
+                    <strong id="confirmOrderNumber">#000000</strong>
+                </div>
+                <div class="confirmation-details">
+                    <p id="confirmMessage">Votre commande a été reçue et sera préparée sous peu.</p>
+                    <div class="delivery-info">
+                        <i class="fas fa-clock"></i>
+                        <span id="confirmDeliveryTime">Livraison estimée: 30-45 minutes</span>
+                    </div>
+                </div>
+                <div class="confirmation-actions">
+                    <button class="btn btn-primary" onclick="trackOrder()">
+                        <i class="fas fa-map-marker-alt"></i> Suivre ma Commande
+                    </button>
+                    <button class="btn btn-outline" onclick="closeModal('orderConfirmModal')">
+                        <i class="fas fa-home"></i> Retour à l'Accueil
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Quick Add to Cart Buttons (to be added to menu items) -->
+<template id="addToCartButtonTemplate">
+    <button class="btn-add-to-cart" data-item-name="" data-item-price="">
+        <i class="fas fa-cart-plus"></i> Ajouter
+    </button>
+</template>

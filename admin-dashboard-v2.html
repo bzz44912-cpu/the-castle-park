@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Castle Park | Administration de Luxe</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Icons (Lucide) -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Charts (Chart.js) -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="admin-v2-styles.css">
+    
+    <!-- Supabase SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
+</head>
+<body>
+
+    <div class="admin-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo-section">
+                <div class="logo-box">
+                    <i data-lucide="castle" style="color: #1a1a1a;"></i>
+                </div>
+                <div class="logo-text">
+                    <h2>The Castle Park</h2>
+                    <span>Administration de Luxe</span>
+                </div>
+            </div>
+
+            <nav class="nav-menu">
+                <a href="#" class="nav-item active" data-view="dashboard">
+                    <i data-lucide="layout-dashboard"></i>
+                    <span>Tableau de Bord</span>
+                </a>
+                <a href="#" class="nav-item" data-view="reservations">
+                    <i data-lucide="calendar-check"></i>
+                    <span>Réservations</span>
+                </a>
+                <a href="#" class="nav-item" data-view="orders">
+                    <i data-lucide="utensils-crosses"></i>
+                    <span>Commandes</span>
+                </a>
+                <a href="#" class="nav-item" data-view="events">
+                    <i data-lucide="sparkles"></i>
+                    <span>Événements</span>
+                </a>
+                <a href="#" class="nav-item" data-view="settings">
+                    <i data-lucide="settings"></i>
+                    <span>Paramètres</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <button class="btn-new-res">
+                    <i data-lucide="plus"></i>
+                    <span>Nouvelle Réservation</span>
+                </button>
+                <a href="#" class="logout-btn" onclick="handleLogout(event)">
+                    <i data-lucide="log-out"></i>
+                    <span>Déconnexion</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Top Bar -->
+            <header class="top-bar">
+                <div class="page-info">
+                    <h1 id="page-title">Tableau de Bord</h1>
+                    <span id="page-subtitle">Vue d'ensemble</span>
+                </div>
+
+                <div class="top-bar-right">
+                    <div class="search-box">
+                        <i data-lucide="search" size="18" color="#555"></i>
+                        <input type="text" placeholder="Rechercher une commande ou un plat...">
+                    </div>
+                    
+                    <button class="icon-btn">
+                        <i data-lucide="bell"></i>
+                        <span class="notification-dot"></span>
+                    </button>
+
+
+                </div>
+            </header>
+
+            <!-- Content Area -->
+            <div class="content-area">
+                
+                <!-- DASHBOARD VIEW -->
+                <section id="dashboard-view" class="content-section active">
+                    <!-- Stats Grid -->
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-header">
+                                <div class="stat-icon-box"><i data-lucide="banknote"></i></div>
+                                <div class="stat-trend trend-up">-</div>
+                            </div>
+                            <div class="stat-value" id="dash-revenue">-</div>
+                            <div class="stat-label">Chiffre d'Affaires</div>
+                            <div class="stat-footer">
+                                <div class="progress-bar"><div class="progress-fill" style="width: 0%;"></div></div>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-header">
+                                <div class="stat-icon-box"><i data-lucide="calendar"></i></div>
+                                <div class="stat-trend" style="color: var(--text-secondary);">-</div>
+                            </div>
+                            <div class="stat-value" id="dash-reservations">-</div>
+                            <div class="stat-label">Réservations Aujourd'hui</div>
+                            <div class="stat-footer">
+                                <div class="progress-bar" style="display: flex; gap: 4px; background: none;">
+                                    <div class="progress-fill" style="width: 0%; border-radius: 3px;"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-header">
+                                <div class="stat-icon-box"><i data-lucide="star"></i></div>
+                                <div class="stat-trend" style="color: var(--accent-gold);">-</div>
+                            </div>
+                            <div class="stat-value" id="dash-satisfaction">-</div>
+                            <div class="stat-label">Satisfaction Clients</div>
+                            <div class="stat-footer" style="display: flex; align-items: center; gap: -10px;">
+                                <!-- Avatars enlevés -->
+                                <span style="font-size: 0.7rem; color: var(--text-secondary); margin-left: 8px;">-</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Dashboard Grid (Chart + Arrivals) -->
+                    <div class="dashboard-grid">
+                        <div class="card">
+                            <div class="card-header">
+                                <div>
+                                    <h3 class="card-title">Activité Hebdomadaire</h3>
+                                    <p class="card-subtitle">Flux de visiteurs par secteur</p>
+                                </div>
+                                <div style="display: flex; gap: 8px;">
+                                    <button class="btn-secondary" style="padding: 6px 12px; font-size: 0.8rem;">Semaine</button>
+                                    <button class="btn-secondary" style="padding: 6px 12px; font-size: 0.8rem; background: rgba(255,255,255,0.05);">Mois</button>
+                                </div>
+                            </div>
+                            <canvas id="activityChart" height="200"></canvas>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Arrivées Prochaines</h3>
+                                <i data-lucide="refresh-cw" size="16" color="#555" style="cursor: pointer;"></i>
+                            </div>
+                            <div class="arrival-list">
+
+                                <button class="btn-secondary" style="width: 100%; margin-top: 10px;">VOIR TOUT L'AGENDA</button>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </section>
+
+                <!-- COMMANDES VIEW -->
+                <section id="orders-view" class="content-section">
+                    <!-- Status Cards -->
+                    <div class="order-stats-grid">
+                        <div class="order-stat-card">
+                            <div class="order-stat-icon" style="background: rgba(157, 133, 225, 0.1); color: var(--accent-purple);"><i data-lucide="clock"></i></div>
+                            <div>
+                                <div style="font-size: 0.7rem; color: var(--text-secondary);">EN ATTENTE</div>
+                                <div style="font-size: 1.5rem; font-weight: 700;" id="order-stat-pending">-</div>
+                            </div>
+                        </div>
+                        <div class="order-stat-card">
+                            <div class="order-stat-icon" style="background: rgba(197, 160, 89, 0.1); color: var(--accent-gold);"><i data-lucide="flame"></i></div>
+                            <div>
+                                <div style="font-size: 0.7rem; color: var(--text-secondary);">EN CUISINE</div>
+                                <div style="font-size: 1.5rem; font-weight: 700;" id="order-stat-preparing">-</div>
+                            </div>
+                        </div>
+                        <div class="order-stat-card">
+                            <div class="order-stat-icon" style="background: rgba(74, 222, 128, 0.1); color: var(--accent-green);"><i data-lucide="check-circle-2"></i></div>
+                            <div>
+                                <div style="font-size: 0.7rem; color: var(--text-secondary);">PRÊTES</div>
+                                <div style="font-size: 1.5rem; font-weight: 700;" id="order-stat-ready">-</div>
+                            </div>
+                        </div>
+                        <div class="order-stat-card" style="border-color: var(--accent-red);">
+                            <div class="order-stat-icon" style="background: rgba(239, 68, 68, 0.1); color: var(--accent-red);"><i data-lucide="alert-circle"></i></div>
+                            <div>
+                                <div style="font-size: 0.7rem; color: var(--text-secondary);">RETARDS</div>
+                                <div style="font-size: 1.5rem; font-weight: 700;" id="order-stat-late">-</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-grid">
+                        <div class="orders-list">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                                <h3 class="card-title">Commandes en Cours</h3>
+                                <div style="display: flex; gap: 8px; background: var(--sidebar-bg); padding: 4px; border-radius: 12px;">
+                                    <button class="btn-secondary" style="padding: 6px 16px; font-size: 0.8rem; border: none;">Restaurant</button>
+                                    <button class="btn-secondary" style="padding: 6px 16px; font-size: 0.8rem; border: none; background: #e3c794; color: #1a1a1a;">Café</button>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                        <div class="menu-availability">
+                            <div class="card-header">
+                                <h3 class="card-title">Disponibilité Menu</h3>
+                                <a href="#" style="font-size: 0.8rem; color: var(--text-secondary);">Voir tout</a>
+                            </div>
+                            
+
+                        </div>
+                    </div>
+
+
+                </section>
+
+                <!-- RESERVATIONS VIEW -->
+                <section id="reservations-view" class="content-section">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px;">
+                        <div style="display: flex; gap: 12px;">
+                            <button class="btn-secondary" style="background: #e3c794; color: #1a1a1a;">Tout</button>
+                            <button class="btn-secondary">Parc</button>
+                            <button class="btn-secondary">Café</button>
+                            <button class="btn-secondary">Restaurant</button>
+                        </div>
+                        <div class="btn-secondary" style="display: flex; align-items: center; gap: 10px;">
+                            <i data-lucide="calendar"></i>
+                            <span id="current-date">-</span>
+                        </div>
+                    </div>
+
+                    <div class="order-stats-grid">
+                        <div class="order-stat-card">
+                            <div>
+                                <div style="font-size: 0.7rem; color: var(--text-secondary);">TOTAL RÉSERVATIONS</div>
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <span style="font-size: 1.5rem; font-weight: 700;" id="res-stat-total">-</span>
+                                    <span style="font-size: 0.7rem; color: var(--accent-green);" id="res-stat-trend">-</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="order-stat-card">
+                            <div>
+                                <div style="font-size: 0.7rem; color: var(--text-secondary);">CONFIRMÉES</div>
+                                <div style="font-size: 1.5rem; font-weight: 700;" id="res-stat-confirmed">-</div>
+                            </div>
+                        </div>
+                        <div class="order-stat-card">
+                            <div>
+                                <div style="font-size: 0.7rem; color: var(--text-secondary);">EN ATTENTE</div>
+                                <div style="font-size: 1.5rem; font-weight: 700;" id="res-stat-pending">-</div>
+                            </div>
+                        </div>
+                        <div class="order-stat-card">
+                            <div style="flex: 1;">
+                                <div style="font-size: 0.7rem; color: var(--text-secondary);">CAPACITÉ ACTUELLE</div>
+                                <div style="display: flex; align-items: center; gap: 12px; margin-top: 8px;">
+                                    <div class="progress-bar" style="flex: 1;"><div class="progress-fill" style="width: 0%;"></div></div>
+                                    <span style="font-weight: 700; font-size: 0.9rem;">-</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="data-table-container">
+                        <div style="padding: 24px; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center;">
+                            <div style="display: flex; gap: 24px; color: var(--text-secondary); font-size: 0.8rem; font-weight: 600;">
+                                <span>CLIENT</span>
+                                <span style="margin-left: 100px;">HEURE</span>
+                                <span style="margin-left: 60px;">ZONE</span>
+                                <span style="margin-left: 60px;">PERS.</span>
+                                <span style="margin-left: 40px;">STATUT</span>
+                            </div>
+                            <span style="font-size: 0.8rem; color: var(--text-secondary); font-weight: 600;">ACTIONS</span>
+                        </div>
+                        <table class="data-table">
+                            <tbody>
+
+                            </tbody>
+                        </table>
+                        <div style="padding: 20px 24px; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-color);">
+                            <span style="font-size: 0.8rem; color: var(--text-secondary);" id="res-pagination-info">Affichage de 0 réservations</span>
+                            <div style="display: flex; gap: 8px;">
+                                <button class="btn-secondary" style="padding: 6px 12px;"><i data-lucide="chevron-left" size="14"></i></button>
+                                <button class="btn-secondary" style="padding: 6px 12px; background: #e3c794; color: #1a1a1a;">1</button>
+                                <button class="btn-secondary" style="padding: 6px 12px;">2</button>
+                                <button class="btn-secondary" style="padding: 6px 12px;">3</button>
+                                <button class="btn-secondary" style="padding: 6px 12px;"><i data-lucide="chevron-right" size="14"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </section>
+
+                <!-- EVENTS VIEW (Placeholder) -->
+                <section id="events-view" class="content-section">
+                    <div class="card">
+                        <h2 class="card-title">Gestion des Événements</h2>
+                        <p class="card-subtitle">Fonctionnalité en cours de déploiement...</p>
+                    </div>
+                </section>
+
+                <!-- SETTINGS VIEW (Placeholder) -->
+                <section id="settings-view" class="content-section">
+                    <div class="card">
+                        <h2 class="card-title">Paramètres Système</h2>
+                        <p class="card-subtitle">Configuration de la plateforme</p>
+                    </div>
+                </section>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- Custom Script -->
+    <script src="admin-v2-script.js"></script>
+</body>
+</html>

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "164902575907",
+    "project_id": "the-castle-park-554b0",
+    "storage_bucket": "the-castle-park-554b0.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:164902575907:android:368e27c1a08f381d6ef696",
+        "android_client_info": {
+          "package_name": "com.castlepark.castle_park_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBgwRWRfSlcRR1zHwSdQn4azTvZ4dg-r2M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
