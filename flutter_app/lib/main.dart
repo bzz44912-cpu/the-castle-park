@@ -236,11 +236,12 @@ class _WebViewScreenState extends State<WebViewScreen> {
     // Android specific configuration for geolocation
     if (_controller.platform is AndroidWebViewController) {
       (_controller.platform as AndroidWebViewController)
-          .setGeolocationPermissionsPromptHandler(
-              (GeolocationPermissionsRequest request) async {
-        return const GeolocationPermissionsResponse(
-            allow: true, retain: true);
-      });
+          .setGeolocationPermissionsPromptCallbacks(
+        onShowPrompt: (GeolocationPermissionsRequestParams request) async {
+          return const GeolocationPermissionsResponse(
+              allow: true, retain: true);
+        },
+      );
     }
   }
 
