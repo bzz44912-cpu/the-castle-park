@@ -19,15 +19,120 @@
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
     <link rel="stylesheet" href="styles_with_photos.css">
-    <link rel="stylesheet" href="chatbot_premium.css">
+    <link rel="stylesheet" href="chatbot.css">
     <link rel="stylesheet" href="styles_architecture.css">
     
     <!-- Supabase SDK -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="supabase-config.js"></script>
+
+    <style>
+        /* Login Overlay Styles */
+        #loginOverlay {
+            position: fixed;
+            inset: 0;
+            background: #0a0a0a;
+            z-index: 200000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            transition: opacity 0.8s ease, visibility 0.8s;
+        }
+        
+        .login-content {
+            text-align: center;
+            max-width: 400px;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(197, 160, 89, 0.2);
+            border-radius: 40px;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+        }
+
+        .login-logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.5rem;
+            color: #c5a059;
+            margin-bottom: 10px;
+            letter-spacing: 4px;
+        }
+
+        .login-subtitle {
+            color: #999;
+            font-size: 0.9rem;
+            margin-bottom: 40px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .google-login-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            width: 100%;
+            padding: 16px;
+            background: #fff;
+            color: #1a1a1a;
+            border: none;
+            border-radius: 15px;
+            font-family: 'Jost', sans-serif;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .google-login-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(255,255,255,0.1);
+            background: #f0f0f0;
+        }
+
+        .google-icon {
+            width: 24px;
+            height: 24px;
+        }
+
+        .loading-spinner {
+            display: none;
+            width: 30px;
+            height: 30px;
+            border: 3px solid rgba(197, 160, 89, 0.3);
+            border-top-color: #c5a059;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 20px auto 0;
+        }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .hidden-site {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+    </style>
 </head>
 
-<body>
+<body class="hidden-site">
+    <!-- ====== LOGIN OVERLAY ====== -->
+    <div id="loginOverlay">
+        <div class="login-content" data-aos="zoom-in">
+            <div class="login-logo">THE CASTLE PARK</div>
+            <div class="login-subtitle">Luxe & Gastronomie</div>
+            
+            <button class="google-login-btn" onclick="clientLogin()">
+                <img src="https://www.google.com/favicon.ico" class="google-icon" alt="Google">
+                Continuer avec Google
+            </button>
+            
+            <div id="loginSpinner" class="loading-spinner"></div>
+        </div>
+    </div>
+
     <!-- ====== NAVBAR ====== -->
     <nav class="navbar-new glass-blur-15" id="navbar">
         <div class="nav-container-new">
@@ -377,7 +482,7 @@
     </div>
 
     <!-- Chatbot trigger is intentionally omitted from the new design for a clean look, but can be added back if needed -->
-    <script src="chatbot_premium.js"></script>
+    <script src="chatbot.js?v=2.2"></script>
     
     <!-- AOS -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
@@ -387,6 +492,48 @@
         // --- INITIALISATION SUPABASE ---
         const { createClient } = supabase;
         const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        // --- AUTHENTIFICATION CLIENT ---
+        async function checkClientSession() {
+            const { data: { session } } = await supabaseClient.auth.getSession();
+            if (session) {
+                console.log("Client connecté:", session.user.email);
+                document.getElementById('loginOverlay').style.opacity = '0';
+                document.getElementById('loginOverlay').style.visibility = 'hidden';
+                document.body.classList.remove('hidden-site');
+                
+                // Pré-remplir les formulaires
+                if (document.getElementById('orderName')) {
+                    document.getElementById('orderName').value = session.user.user_metadata.full_name || "";
+                }
+                if (document.getElementById('resName')) {
+                    document.getElementById('resName').value = session.user.user_metadata.full_name || "";
+                }
+                if (document.getElementById('resEmail')) {
+                    document.getElementById('resEmail').value = session.user.email || "";
+                }
+            } else {
+                console.log("Aucune session client active.");
+                document.body.classList.add('hidden-site');
+            }
+        }
+
+        async function clientLogin() {
+            document.getElementById('loginSpinner').style.display = 'block';
+            const { error } = await supabaseClient.auth.signInWithOAuth({
+                provider: 'google',
+                options: {
+                    redirectTo: window.location.origin + window.location.pathname
+                }
+            });
+            if (error) {
+                alert("Erreur de connexion: " + error.message);
+                document.getElementById('loginSpinner').style.display = 'none';
+            }
+        }
+
+        // Vérifier au chargement
+        checkClientSession();
 
         // --- GESTION DES RÉSERVATIONS ---
         const reservationForm = document.getElementById('reservationForm');
@@ -410,11 +557,25 @@
                 submitBtn.disabled = true;
 
                 try {
-                    const { error } = await supabaseClient.from('reservations').insert([data]);
-                    if (!error) {
+                    const response = await fetch('/api/reservations', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(data)
+                    });
+                    const result = await response.json();
+                    
+                    if (result.success) {
+                        const newRes = result.data;
+                        let myReservations = JSON.parse(localStorage.getItem('myReservations') || '[]');
+                        if (!myReservations.includes(newRes.id)) {
+                            myReservations.push(newRes.id);
+                            localStorage.setItem('myReservations', JSON.stringify(myReservations));
+                        }
+                        setupReservationsListener();
+
                         alert("✅ Merci ! Votre réservation a été enregistrée avec succès.");
                         reservationForm.reset();
-                    } else throw error;
+                    } else throw new Error(result.error);
                 } catch (error) {
                     console.error("Erreur:", error);
                     alert("❌ Erreur: " + error.message);
@@ -490,11 +651,12 @@
                     address: document.getElementById('orderAddress').value,
                     items: cart,
                     total: cart.reduce((sum, item) => sum + (item.price * item.qty), 0),
-                    fcm_token: window.fcmToken || null
+                    fcm_token: window.fcmToken || localStorage.getItem('web_fcm_token') || null
                 };
 
+                // Si pas de token, on avertit discrètement en console au lieu d'une alerte bloquante
                 if (!orderData.fcm_token) {
-                    alert("Debug: Aucun token FCM détecté. Les notifications ne marcheront pas.");
+                    console.warn("Note: Aucun token de notification (FCM) détecté. Le client ne recevra pas de push notifications.");
                 } else {
                     console.log("FCM Token détecté:", orderData.fcm_token);
                 }
@@ -503,23 +665,27 @@
                 btn.disabled = true;
 
                 try {
-                    const { data, error } = await supabaseClient.from('orders').insert([orderData]).select();
-                    if (!error) {
-                        if (data && data.length > 0) {
-                            const newOrderId = data[0].id;
-                            let myOrders = JSON.parse(localStorage.getItem('myOrders') || '[]');
-                            if (!myOrders.includes(newOrderId)) {
-                                myOrders.push(newOrderId);
-                                localStorage.setItem('myOrders', JSON.stringify(myOrders));
-                            }
-                            setupOrdersListener();
+                    const response = await fetch('/api/orders', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(orderData)
+                    });
+                    const result = await response.json();
+
+                    if (result.success) {
+                        const newOrder = result.data;
+                        let myOrders = JSON.parse(localStorage.getItem('myOrders') || '[]');
+                        if (!myOrders.includes(newOrder.id)) {
+                            myOrders.push(newOrder.id);
+                            localStorage.setItem('myOrders', JSON.stringify(myOrders));
                         }
+                        setupOrdersListener();
 
                         alert("🎉 Commande reçue ! Nous préparons votre livraison.");
                         cart = [];
                         updateCartBadge();
                         toggleCart();
-                    } else throw error;
+                    } else throw new Error(result.error);
                 } catch (err) {
                     alert("Erreur: " + err.message);
                 } finally {
@@ -572,31 +738,78 @@
             }, 6000);
         }
 
+        // --- NOTIFICATIONS EN TEMPS RÉEL (CLIENT) ---
         let ordersChannel = null;
         function setupOrdersListener() {
-            const myOrders = JSON.parse(localStorage.getItem('myOrders') || '[]');
-            if (myOrders.length === 0) return;
+            if (ordersChannel) supabaseClient.removeChannel(ordersChannel);
 
-            if (ordersChannel) {
-                supabaseClient.removeChannel(ordersChannel);
-            }
-
-            ordersChannel = supabaseClient.channel('public:client_orders')
+            console.log("🔔 Tentative d'écoute des commandes...");
+            ordersChannel = supabaseClient.channel('orders-realtime')
                 .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'orders' }, payload => {
+                    console.log("📦 Changement détecté sur une commande:", payload);
                     const updatedOrder = payload.new;
-                    if (myOrders.includes(updatedOrder.id)) {
-                        if (updatedOrder.status === 'preparing') {
-                            showNotification("Votre commande a été acceptée et est en cuisine !", false);
-                        } else if (updatedOrder.status === 'ready') {
-                            showNotification("Votre commande est prête !", true);
+                    
+                    // Vérifier si cette commande appartient à l'utilisateur actuel
+                    const myOrders = JSON.parse(localStorage.getItem('myOrders') || '[]');
+                    if (!myOrders.includes(updatedOrder.id)) {
+                        console.log("ℹ️ Commande ignorée (pas à moi):", updatedOrder.id);
+                        return;
+                    }
+
+                    let msg = "";
+                    if (updatedOrder.status === 'preparing') {
+                        msg = `🎉 **Bonne nouvelle !**\n\nVotre commande **#${updatedOrder.id.substring(0, 4)}** a été acceptée ! Elle est maintenant en préparation en cuisine. 👨‍🍳✨`;
+                    } else if (updatedOrder.status === 'ready') {
+                        msg = `✅ **Votre commande est prête !**\n\nVotre délice est prêt à être dégusté. Notre équipe s'occupe du reste. Bon appétit ! 🏰🍴`;
+                    }
+
+                    if (msg) {
+                        if (window.chatbot && window.chatbot.addBotMessage) {
+                            console.log("💬 Envoi au chatbot...");
+                            window.chatbot.addBotMessage(msg);
+                        } else {
+                            console.log("⚠️ Chatbot non trouvé, utilisation du toast.");
+                            showNotification(msg.replace(/\*\*/g, ''), updatedOrder.status === 'ready');
                         }
                     }
                 })
-                .subscribe();
+                .subscribe((status) => {
+                    console.log("📡 Statut de la connexion Realtime (Orders):", status);
+                });
+        }
+
+        let reservationsChannel = null;
+        function setupReservationsListener() {
+            if (reservationsChannel) supabaseClient.removeChannel(reservationsChannel);
+
+            console.log("📅 Tentative d'écoute des réservations...");
+            reservationsChannel = supabaseClient.channel('reservations-realtime')
+                .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'reservations' }, payload => {
+                    console.log("🗓️ Changement détecté sur une réservation:", payload);
+                    const updatedRes = payload.new;
+
+                    // Vérifier si cette réservation appartient à l'utilisateur actuel
+                    const myReservations = JSON.parse(localStorage.getItem('myReservations') || '[]');
+                    if (!myReservations.includes(updatedRes.id)) {
+                        console.log("ℹ️ Réservation ignorée (pas à moi):", updatedRes.id);
+                        return;
+                    }
+
+                    if (updatedRes.status === 'confirmed') {
+                        const msg = `📅 **Réservation Confirmée !**\n\nBonjour ${updatedRes.name}, votre table pour le **${updatedRes.date}** à **${updatedRes.time}** est confirmée. On vous attend avec impatience ! 🏰✨`;
+                        if (window.chatbot && window.chatbot.addBotMessage) {
+                            window.chatbot.addBotMessage(msg);
+                        }
+                    }
+                })
+                .subscribe((status) => {
+                    console.log("📡 Statut de la connexion Realtime (Reservations):", status);
+                });
         }
 
         // Démarrer l'écoute au chargement de la page
         setupOrdersListener();
+        setupReservationsListener();
     </script>
 </body>
 </html>

@@ -294,4 +294,21 @@
     } else {
         init();
     }
+
+    // EXPOSITION DE L'API GLOBALE
+    window.chatbot = {
+        addBotMessage: (text) => {
+            const chatWindow = document.getElementById('chatbotWindow');
+            const toggleBtn = document.getElementById('chatbotToggle');
+            
+            // Ouvrir le chat s'il est fermé
+            if (chatWindow && !chatWindow.classList.contains('chatbot-open')) {
+                chatWindow.classList.add('chatbot-open');
+                if (toggleBtn) toggleBtn.classList.add('chatbot-active');
+            }
+            
+            // Ajouter le message
+            addMessage(text, true);
+        }
+    };
 })();

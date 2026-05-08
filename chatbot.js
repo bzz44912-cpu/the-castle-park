@@ -268,7 +268,7 @@
                 <div class="chatbot-header">
                     <div class="chatbot-header-left">
                         <div class="chatbot-avatar">
-                            <span>TL</span>
+                            <span>CP</span>
                             <div class="chatbot-status-dot"></div>
                         </div>
                         <div class="chatbot-header-info">
@@ -325,7 +325,7 @@
         if (isBot) {
             msgDiv.innerHTML = `
                 <div class="msg-avatar">
-                    <span>TL</span>
+                    <span>CP</span>
                 </div>
                 <div class="msg-content">
                     <div class="msg-bubble bot-bubble">
@@ -361,7 +361,7 @@
         typingDiv.id = 'typingIndicator';
         typingDiv.innerHTML = `
             <div class="msg-avatar">
-                <span>TL</span>
+                <span>CP</span>
             </div>
             <div class="msg-content">
                 <div class="msg-bubble bot-bubble typing-bubble">
@@ -475,6 +475,26 @@
             }
         }, 3000);
     }
+
+    // ─── EXPOSE GLOBAL API ────────────────────────────────────────
+    window.chatbot = {
+        addBotMessage: (text) => {
+            const chatWindow = document.getElementById('chatbotWindow');
+            const toggleBtn = document.getElementById('chatbotToggle');
+            const input = document.getElementById('chatbotInput');
+
+            // Open chat window if closed
+            if (chatWindow && !chatWindow.classList.contains('chatbot-open')) {
+                chatWindow.classList.add('chatbot-open');
+                if (toggleBtn) toggleBtn.classList.add('chatbot-active');
+                // Focus input if opening
+                if (input) setTimeout(() => input.focus(), 300);
+            }
+
+            // Add the message
+            addMessage(text, true);
+        }
+    };
 
     // Wait for DOM
     if (document.readyState === 'loading') {
