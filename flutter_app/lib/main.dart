@@ -3,6 +3,9 @@ import 'package:flutter/services.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:webview_flutter_android/webview_flutter_android.dart';
+import 'package:webview_flutter_wkwebview/webview_flutter_wkwebview.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -194,6 +197,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
   @override
   void initState() {
     super.initState();
+    _requestLocationPermission();
     _controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setBackgroundColor(const Color(0xFF0D5C75))
@@ -228,6 +232,25 @@ class _WebViewScreenState extends State<WebViewScreen> {
         ),
       )
       ..loadRequest(Uri.parse('https://the-castle-park.vercel.app/'));
+
+    // Android specific configuration for geolocation
+    if (_controller.platform is AndroidWebViewController) {
+      (_controller.platform as AndroidWebViewController)
+          .setGeolocationPermissionsPromptHandler(
+              (GeolocationPermissionsRequest request) async {
+        return const GeolocationPermissionsResponse(
+            allow: true, retain: true);
+      });
+    }
+  }
+
+  Future<void> _requestLocationPermission() async {
+    PermissionStatus status = await Permission.location.request();
+    if (status.isGranted) {
+      debugPrint("DEBUG: Location permission granted.");
+    } else {
+      debugPrint("DEBUG: Location permission denied.");
+    }
   }
 
   Future<void> _injectFcmToken() async {

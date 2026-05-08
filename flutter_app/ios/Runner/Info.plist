@@ -71,6 +71,10 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Nous avons besoin de votre position pour le suivi de livraison en temps réel.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Nous avons besoin de votre position pour le suivi de livraison en temps réel même en arrière-plan.</string>
 	<key>io.flutter.embedded_views_preview</key>
 	<true/>
 </dict>
