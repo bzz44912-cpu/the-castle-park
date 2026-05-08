@@ -367,9 +367,19 @@
             initTracking(orderId);
         }
 
-        let map, clientMarker, deliveryMarker, routeLine;
+        const CAFE_LAT = 35.0354;
+        const CAFE_LNG = 9.4839;
+
+        let map, clientMarker, deliveryMarker, cafeMarker, routeLine;
 
         // Custom icons
+        const cafeIcon = L.divIcon({
+            className: 'custom-marker',
+            html: '<div style="background:#0a0a0a;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:3px solid var(--gold);font-size:1rem;">🏰</div>',
+            iconSize: [36, 36],
+            iconAnchor: [18, 18]
+        });
+
         const clientIcon = L.divIcon({
             className: 'custom-marker',
             html: '<div style="background:#2A6B70;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:3px solid white;font-size:1rem;">📍</div>',
@@ -413,15 +423,20 @@
                 updateStatusUI(order.status);
 
                 // Init map
-                const clientLat = order.client_lat || 34.7406;
-                const clientLng = order.client_lng || 9.4874;
+                const clientLat = order.client_lat || CAFE_LAT;
+                const clientLng = order.client_lng || CAFE_LNG;
 
-                map = L.map('map').setView([clientLat, clientLng], 15);
+                map = L.map('map').setView([CAFE_LAT, CAFE_LNG], 15);
 
                 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                     attribution: '© OpenStreetMap',
                     maxZoom: 19
                 }).addTo(map);
+
+                // Cafe marker
+                cafeMarker = L.marker([CAFE_LAT, CAFE_LNG], { icon: cafeIcon })
+                    .addTo(map)
+                    .bindPopup('<strong>🏰 The Castle Park</strong><br>Point de départ');
 
                 // Client marker
                 clientMarker = L.marker([clientLat, clientLng], { icon: clientIcon })
