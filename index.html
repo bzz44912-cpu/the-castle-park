@@ -558,25 +558,23 @@
                 submitBtn.disabled = true;
 
                 try {
-                    const response = await fetch('/api/reservations', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(data)
-                    });
-                    const result = await response.json();
+                    const { data: newRes, error } = await supabaseClient
+                        .from('reservations')
+                        .insert([data])
+                        .select()
+                        .single();
                     
-                    if (result.success) {
-                        const newRes = result.data;
-                        let myReservations = JSON.parse(localStorage.getItem('myReservations') || '[]');
-                        if (!myReservations.includes(newRes.id)) {
-                            myReservations.push(newRes.id);
-                            localStorage.setItem('myReservations', JSON.stringify(myReservations));
-                        }
-                        setupReservationsListener();
+                    if (error) throw error;
 
-                        alert("✅ Merci ! Votre réservation a été enregistrée avec succès.");
-                        reservationForm.reset();
-                    } else throw new Error(result.error);
+                    let myReservations = JSON.parse(localStorage.getItem('myReservations') || '[]');
+                    if (!myReservations.includes(newRes.id)) {
+                        myReservations.push(newRes.id);
+                        localStorage.setItem('myReservations', JSON.stringify(myReservations));
+                    }
+                    setupReservationsListener();
+
+                    alert("✅ Merci ! Votre réservation a été enregistrée avec succès.");
+                    reservationForm.reset();
                 } catch (error) {
                     console.error("Erreur:", error);
                     alert("❌ Erreur: " + error.message);
@@ -666,27 +664,33 @@
                 btn.disabled = true;
 
                 try {
-                    const response = await fetch('/api/orders', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(orderData)
-                    });
-                    const result = await response.json();
+                    const { data: newOrder, error } = await supabaseClient
+                        .from('orders')
+                        .insert([{
+                            customer_name: orderData.customer_name,
+                            customer_phone: orderData.customer_phone,
+                            address: orderData.address,
+                            items: orderData.items,
+                            total: orderData.total,
+                            fcm_token: orderData.fcm_token,
+                            status: 'pending'
+                        }])
+                        .select()
+                        .single();
+                    
+                    if (error) throw error;
 
-                    if (result.success) {
-                        const newOrder = result.data;
-                        let myOrders = JSON.parse(localStorage.getItem('myOrders') || '[]');
-                        if (!myOrders.includes(newOrder.id)) {
-                            myOrders.push(newOrder.id);
-                            localStorage.setItem('myOrders', JSON.stringify(myOrders));
-                        }
-                        setupOrdersListener();
+                    let myOrders = JSON.parse(localStorage.getItem('myOrders') || '[]');
+                    if (!myOrders.includes(newOrder.id)) {
+                        myOrders.push(newOrder.id);
+                        localStorage.setItem('myOrders', JSON.stringify(myOrders));
+                    }
+                    setupOrdersListener();
 
-                        alert("🎉 Commande reçue ! Nous préparons votre livraison.");
-                        cart = [];
-                        updateCartBadge();
-                        toggleCart();
-                    } else throw new Error(result.error);
+                    alert("🎉 Commande reçue ! Nous préparons votre livraison.");
+                    cart = [];
+                    updateCartBadge();
+                    toggleCart();
                 } catch (err) {
                     alert("Erreur: " + err.message);
                 } finally {

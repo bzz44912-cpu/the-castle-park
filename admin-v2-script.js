@@ -88,23 +88,25 @@ document.addEventListener('DOMContentLoaded', async function() {
     // 6. Gestion des Données (Supabase)
     async function fetchReservations() {
         try {
-            const response = await fetch('/api/reservations');
-            const result = await response.json();
-            if (result.success) {
-                renderReservations(result.data);
-                updateReservationStats(result.data);
-            }
+            const { data, error } = await supabaseClient
+                .from('reservations')
+                .select('*')
+                .order('created_at', { ascending: false });
+            if (error) throw error;
+            renderReservations(data);
+            updateReservationStats(data);
         } catch (error) { console.error(error); }
     }
 
     async function fetchOrders() {
         try {
-            const response = await fetch('/api/orders');
-            const result = await response.json();
-            if (result.success) {
-                renderOrders(result.data);
-                updateOrderStats(result.data);
-            }
+            const { data, error } = await supabaseClient
+                .from('orders')
+                .select('*')
+                .order('created_at', { ascending: false });
+            if (error) throw error;
+            renderOrders(data);
+            updateOrderStats(data);
         } catch (error) { console.error(error); }
     }
 
@@ -271,20 +273,17 @@ document.addEventListener('DOMContentLoaded', async function() {
     async function updateStatus(type, id, status) {
         try {
             console.log(`🔄 Mise à jour de ${type} (${id}) vers le statut: ${status}...`);
-            const response = await fetch(`/api/${type}/${id}`, {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ status })
-            });
-            const result = await response.json();
-            if (result.success) {
-                console.log(`✅ Mise à jour réussie !`);
-                if (type === 'orders') fetchOrders();
-                else fetchReservations();
-            } else {
-                console.error(`❌ Erreur API:`, result.error);
-            }
-        } catch (error) { console.error(`❌ Erreur réseau:`, error); }
+            const { error } = await supabaseClient
+                .from(type)
+                .update({ status })
+                .eq('id', id);
+            
+            if (error) throw error;
+            
+            console.log(`✅ Mise à jour réussie !`);
+            if (type === 'orders') fetchOrders();
+            else fetchReservations();
+        } catch (error) { console.error(`❌ Erreur:`, error); }
     }
 
     window.updateStatus = updateStatus;
