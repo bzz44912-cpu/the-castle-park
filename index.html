@@ -117,7 +117,7 @@
     </style>
 </head>
 
-<body class="hidden-site">
+<body>
     <!-- ====== LOGIN OVERLAY ====== -->
     <div id="loginOverlay">
         <div class="login-content" data-aos="zoom-in">
@@ -514,7 +514,8 @@
                 }
             } else {
                 console.log("Aucune session client active.");
-                document.body.classList.add('hidden-site');
+                document.getElementById('loginOverlay').style.opacity = '1';
+                document.getElementById('loginOverlay').style.visibility = 'visible';
             }
         }
 
