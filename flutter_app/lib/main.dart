@@ -227,7 +227,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
           },
         ),
       )
-      ..loadRequest(Uri.parse('https://merry-dolphin-e4991d.netlify.app/'));
+      ..loadRequest(Uri.parse('https://the-castle-park.vercel.app/'));
   }
 
   Future<void> _injectFcmToken() async {

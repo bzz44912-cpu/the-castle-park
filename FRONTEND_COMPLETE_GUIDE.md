@@ -407,10 +407,10 @@ async function submitOrder(orderData) {
 
 ## 🚀 DÉPLOIEMENT
 
-### Sur Netlify
-1. Créer un compte: https://netlify.com
-2. Déposer les fichiers
-3. Publier automatiquement
+### Sur Vercel (Recommandé)
+1. Créer un compte: https://vercel.com
+2. Déposer les fichiers (via CLI ou GitHub)
+3. Déploiement automatique
 
 ### Sur GitHub Pages
 ```bash

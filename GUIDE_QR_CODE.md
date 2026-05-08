@@ -151,7 +151,7 @@ const BASE_URL = 'https://votre-site-deploye.com';
 
 **Exemple concret :**
 ```javascript
-const BASE_URL = 'https://the-loft-lounge.vercel.app';
+const BASE_URL = 'https://the-castle-park.vercel.app';
 ```
 
 Ensuite :
