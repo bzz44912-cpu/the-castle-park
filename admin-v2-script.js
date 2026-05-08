@@ -167,12 +167,26 @@ document.addEventListener('DOMContentLoaded', async function() {
             
             // On définit le bouton en fonction du statut
             let actionBtn = '';
+            let locationBtn = '';
+
             if (o.status === 'pending') {
                 actionBtn = `<button class="btn-primary" style="background: var(--accent-green);" onclick="updateStatus('orders', '${o.id}', 'preparing')">Accepter la Commande</button>`;
             } else if (o.status === 'preparing') {
-                actionBtn = `<button class="btn-secondary" onclick="updateStatus('orders', '${o.id}', 'ready')">Marquer comme Prête</button>`;
+                actionBtn = `<button class="btn-secondary" onclick="updateStatus('orders', '${o.id}', 'ready')">Marquer comme Prête</button>
+                             <button class="btn-primary" style="background: #3b82f6;" onclick="startDelivery('${o.id}')">🛵 Lancer la livraison</button>`;
+            } else if (o.status === 'delivering') {
+                actionBtn = `<button class="btn-primary" style="background: var(--accent-green);" onclick="updateStatus('orders', '${o.id}', 'delivered')">✅ Livrée</button>
+                             <span style="color: #3b82f6; font-size: 0.75rem; animation: blink 1.5s infinite;">📡 GPS actif</span>`;
             } else {
                 actionBtn = `<span style="color: var(--accent-green); font-size: 0.8rem; font-weight: 600;">✓ Terminé</span>`;
+            }
+
+            // Bouton localisation client
+            if (o.client_lat && o.client_lng) {
+                locationBtn = `<a href="https://www.google.com/maps?q=${o.client_lat},${o.client_lng}" target="_blank" 
+                    style="display:inline-flex;align-items:center;gap:4px;padding:4px 10px;background:rgba(197,160,89,0.15);color:#C5A059;border-radius:8px;font-size:0.75rem;text-decoration:none;font-weight:600;">
+                    📍 Voir localisation client
+                </a>`;
             }
 
             card.innerHTML = `
@@ -184,8 +198,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                             <div style="font-size: 0.75rem; color: var(--text-secondary);">⏰ ${new Date(o.created_at).toLocaleTimeString()}</div>
                         </div>
                     </div>
-                    <span class="status-badge status-${o.status === 'pending' ? 'waiting' : (o.status === 'preparing' ? 'preparing' : 'confirmed')}">
-                        ${o.status === 'pending' ? 'En attente' : (o.status === 'preparing' ? 'En Cuisine' : 'Prête')}
+                    <span class="status-badge status-${o.status === 'pending' ? 'waiting' : (o.status === 'preparing' ? 'preparing' : (o.status === 'delivering' ? 'preparing' : 'confirmed'))}">
+                        ${o.status === 'pending' ? 'En attente' : (o.status === 'preparing' ? 'En Cuisine' : (o.status === 'delivering' ? '🛵 En livraison' : 'Prête'))}
                     </span>
                 </div>
                 <div class="order-items-list">
@@ -197,8 +211,11 @@ document.addEventListener('DOMContentLoaded', async function() {
                     `).join('') : '<div class="order-item-row"><span>Aucun article</span></div>'}
                 </div>
                 <div class="order-note">
-                    <span style="font-style: italic;">Note: ${o.address || 'Livraison standard'}</span>
-                    <div style="display: flex; gap: 8px;">
+                    <div>
+                        <span style="font-style: italic;">Note: ${o.address || 'Livraison standard'}</span>
+                        ${locationBtn ? '<br>' + locationBtn : ''}
+                    </div>
+                    <div style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">
                         ${actionBtn}
                     </div>
                 </div>
@@ -286,7 +303,59 @@ document.addEventListener('DOMContentLoaded', async function() {
         } catch (error) { console.error(`❌ Erreur:`, error); }
     }
 
+    async function startDelivery(id) {
+        try {
+            console.log(`🛵 Lancement de la livraison pour la commande ${id}...`);
+            
+            // 1. Mettre à jour le statut
+            const { error: statusError } = await supabaseClient
+                .from('orders')
+                .update({ status: 'delivering' })
+                .eq('id', id);
+            
+            if (statusError) throw statusError;
+
+            // 2. Commencer à suivre la position GPS du livreur
+            if (navigator.geolocation) {
+                const watchId = navigator.geolocation.watchPosition(async (pos) => {
+                    const { latitude, longitude } = pos.coords;
+                    console.log(`📍 GPS Livreur (#${id}):`, latitude, longitude);
+
+                    // Mettre à jour Supabase avec la nouvelle position
+                    const { error: geoError } = await supabaseClient
+                        .from('orders')
+                        .update({ 
+                            delivery_lat: latitude, 
+                            delivery_lng: longitude 
+                        })
+                        .eq('id', id);
+
+                    if (geoError) console.error("Erreur mise à jour GPS:", geoError);
+                }, (err) => {
+                    console.error("Erreur Geolocation:", err);
+                    alert("Impossible d'accéder au GPS. Vérifiez les permissions.");
+                }, {
+                    enableHighAccuracy: true,
+                    maximumAge: 0,
+                    timeout: 5000
+                });
+
+                // Stocker le watchId pour pouvoir l'arrêter si besoin (optionnel)
+                window[`deliveryWatch_${id}`] = watchId;
+            } else {
+                alert("Votre navigateur ne supporte pas la géolocalisation.");
+            }
+
+            console.log(`✅ Livraison lancée !`);
+            fetchOrders();
+        } catch (error) {
+            console.error(`❌ Erreur:`, error);
+            alert("Erreur lors du lancement de la livraison.");
+        }
+    }
+
     window.updateStatus = updateStatus;
+    window.startDelivery = startDelivery;
 
     // 7. Chargement Initial & Realtime
     fetchReservations();

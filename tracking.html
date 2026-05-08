@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suivi de Livraison | The Castle Park</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
+
+    <style>
+        :root {
+            --sage: #2A6B70;
+            --sage-dark: #1A4B4F;
+            --gold: #C5A059;
+            --gold-light: #DFBF8D;
+            --bg-dark: #0a0a0a;
+            --card-bg: #121212;
+            --text: #ffffff;
+            --text-muted: #999;
+            --border: #222;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        .tracking-header {
+            background: var(--card-bg);
+            border-bottom: 1px solid var(--border);
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            position: relative;
+            z-index: 1000;
+        }
+
+        .tracking-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--gold), var(--sage), var(--gold));
+            background-size: 200% 100%;
+            animation: shimmer 4s linear infinite;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+
+        .header-logo {
+            width: 44px;
+            height: 44px;
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .header-info h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .header-info p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        /* Status Bar */
+        .status-bar {
+            background: var(--card-bg);
+            border-bottom: 1px solid var(--border);
+            padding: 14px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .status-badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+
+        .status-preparing {
+            background: rgba(234, 179, 8, 0.15);
+            color: #eab308;
+            border: 1px solid rgba(234, 179, 8, 0.3);
+        }
+
+        .status-delivering {
+            background: rgba(59, 130, 246, 0.15);
+            color: #3b82f6;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            animation: pulse-blue 2s ease-in-out infinite;
+        }
+
+        .status-delivered {
+            background: rgba(34, 197, 94, 0.15);
+            color: #22c55e;
+            border: 1px solid rgba(34, 197, 94, 0.3);
+        }
+
+        @keyframes pulse-blue {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.3); }
+            50% { box-shadow: 0 0 0 8px rgba(59, 130, 246, 0); }
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: currentColor;
+            animation: blink 1.5s ease-in-out infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        .order-id {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            font-family: monospace;
+        }
+
+        /* Map */
+        #map {
+            flex: 1;
+            min-height: 400px;
+            z-index: 1;
+        }
+
+        /* Info Panel */
+        .info-panel {
+            background: var(--card-bg);
+            border-top: 1px solid var(--border);
+            padding: 20px 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .info-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .info-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+
+        .info-icon.client {
+            background: rgba(42, 107, 112, 0.15);
+        }
+
+        .info-icon.delivery {
+            background: rgba(197, 160, 89, 0.15);
+        }
+
+        .info-text h4 {
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .info-text p {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        /* Loading State */
+        .loading-screen {
+            position: fixed;
+            inset: 0;
+            background: var(--bg-dark);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+
+        .loading-screen.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loading-spinner {
+            width: 48px;
+            height: 48px;
+            border: 3px solid var(--border);
+            border-top-color: var(--gold);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        /* Error State */
+        .error-screen {
+            position: fixed;
+            inset: 0;
+            background: var(--bg-dark);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            z-index: 9999;
+            padding: 24px;
+            text-align: center;
+        }
+
+        .error-screen h2 {
+            font-family: 'Playfair Display', serif;
+            color: var(--gold);
+        }
+
+        .error-screen p {
+            color: var(--text-muted);
+            max-width: 400px;
+        }
+
+        /* Custom Markers */
+        .custom-marker {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-size: 1.4rem;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.4));
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .tracking-header { padding: 12px 16px; }
+            .status-bar { padding: 10px 16px; }
+            .info-panel { padding: 16px; }
+            .header-info h1 { font-size: 0.95rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Chargement du suivi...</div>
+    </div>
+
+    <!-- Error -->
+    <div class="error-screen" id="errorScreen" style="display:none;">
+        <div style="font-size:3rem;">🏰</div>
+        <h2>Commande introuvable</h2>
+        <p>Le lien de suivi est invalide ou la commande n'existe plus.</p>
+        <a href="/" style="color: var(--gold); text-decoration: underline;">Retour à l'accueil</a>
+    </div>
+
+    <!-- Header -->
+    <div class="tracking-header" id="trackingUI" style="display:none;">
+        <div class="header-logo">🏰</div>
+        <div class="header-info">
+            <h1>THE CASTLE PARK</h1>
+            <p>Suivi de livraison en temps réel</p>
+        </div>
+    </div>
+
+    <!-- Status -->
+    <div class="status-bar" id="statusBar" style="display:none;">
+        <div class="status-badge status-preparing" id="statusBadge">
+            <div class="status-dot"></div>
+            <span id="statusText">En préparation</span>
+        </div>
+        <span class="order-id" id="orderId"></span>
+    </div>
+
+    <!-- Map -->
+    <div id="map" style="display:none;"></div>
+
+    <!-- Info Panel -->
+    <div class="info-panel" id="infoPanel" style="display:none;">
+        <div class="info-row">
+            <div class="info-icon client">📍</div>
+            <div class="info-text">
+                <h4>Votre position</h4>
+                <p id="clientAddress">En attente...</p>
+            </div>
+        </div>
+        <div class="info-row">
+            <div class="info-icon delivery">🛵</div>
+            <div class="info-text">
+                <h4>Livreur</h4>
+                <p id="deliveryStatus">Position en attente...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <script>
+        // --- Init Supabase ---
+        const { createClient } = supabase;
+        const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        // --- Get order ID from URL ---
+        const params = new URLSearchParams(window.location.search);
+        const orderId = params.get('id');
+
+        if (!orderId) {
+            document.getElementById('loadingScreen').style.display = 'none';
+            document.getElementById('errorScreen').style.display = 'flex';
+        } else {
+            initTracking(orderId);
+        }
+
+        let map, clientMarker, deliveryMarker, routeLine;
+
+        // Custom icons
+        const clientIcon = L.divIcon({
+            className: 'custom-marker',
+            html: '<div style="background:#2A6B70;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:3px solid white;font-size:1rem;">📍</div>',
+            iconSize: [36, 36],
+            iconAnchor: [18, 18]
+        });
+
+        const deliveryIcon = L.divIcon({
+            className: 'custom-marker',
+            html: '<div style="background:#C5A059;width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:3px solid white;font-size:1.2rem;">🛵</div>',
+            iconSize: [40, 40],
+            iconAnchor: [20, 20]
+        });
+
+        async function initTracking(id) {
+            try {
+                // Fetch order
+                const { data: order, error } = await supabaseClient
+                    .from('orders')
+                    .select('*')
+                    .eq('id', id)
+                    .single();
+
+                if (error || !order) {
+                    document.getElementById('loadingScreen').style.display = 'none';
+                    document.getElementById('errorScreen').style.display = 'flex';
+                    return;
+                }
+
+                // Show UI
+                document.getElementById('loadingScreen').classList.add('hidden');
+                document.getElementById('trackingUI').style.display = 'flex';
+                document.getElementById('statusBar').style.display = 'flex';
+                document.getElementById('map').style.display = 'block';
+                document.getElementById('infoPanel').style.display = 'flex';
+
+                // Order ID display
+                document.getElementById('orderId').textContent = `#${id.substring(0, 8)}`;
+
+                // Update status
+                updateStatusUI(order.status);
+
+                // Init map
+                const clientLat = order.client_lat || 34.7406;
+                const clientLng = order.client_lng || 9.4874;
+
+                map = L.map('map').setView([clientLat, clientLng], 15);
+
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '© OpenStreetMap',
+                    maxZoom: 19
+                }).addTo(map);
+
+                // Client marker
+                clientMarker = L.marker([clientLat, clientLng], { icon: clientIcon })
+                    .addTo(map)
+                    .bindPopup('<strong>📍 Votre position</strong><br>' + (order.address || 'Client'));
+
+                document.getElementById('clientAddress').textContent = order.address || `${clientLat.toFixed(4)}, ${clientLng.toFixed(4)}`;
+
+                // Delivery marker (if position exists)
+                if (order.delivery_lat && order.delivery_lng) {
+                    addDeliveryMarker(order.delivery_lat, order.delivery_lng);
+                }
+
+                // Subscribe to realtime updates
+                supabaseClient
+                    .channel(`tracking-${id}`)
+                    .on('postgres_changes', {
+                        event: 'UPDATE',
+                        schema: 'public',
+                        table: 'orders',
+                        filter: `id=eq.${id}`
+                    }, (payload) => {
+                        const updated = payload.new;
+                        updateStatusUI(updated.status);
+
+                        if (updated.delivery_lat && updated.delivery_lng) {
+                            addDeliveryMarker(updated.delivery_lat, updated.delivery_lng);
+                            document.getElementById('deliveryStatus').textContent = 
+                                `En route • Mis à jour ${new Date().toLocaleTimeString('fr-FR', {hour:'2-digit', minute:'2-digit'})}`;
+                        }
+
+                        if (updated.status === 'delivered') {
+                            document.getElementById('deliveryStatus').textContent = 'Livraison effectuée ! 🎉';
+                        }
+                    })
+                    .subscribe();
+
+            } catch (err) {
+                console.error('Tracking error:', err);
+                document.getElementById('loadingScreen').style.display = 'none';
+                document.getElementById('errorScreen').style.display = 'flex';
+            }
+        }
+
+        function addDeliveryMarker(lat, lng) {
+            if (deliveryMarker) {
+                deliveryMarker.setLatLng([lat, lng]);
+            } else {
+                deliveryMarker = L.marker([lat, lng], { icon: deliveryIcon })
+                    .addTo(map)
+                    .bindPopup('<strong>🛵 Livreur</strong>');
+            }
+
+            // Draw/update route line
+            if (clientMarker) {
+                const clientPos = clientMarker.getLatLng();
+                if (routeLine) map.removeLayer(routeLine);
+                routeLine = L.polyline(
+                    [[lat, lng], [clientPos.lat, clientPos.lng]],
+                    { color: '#C5A059', weight: 3, dashArray: '8, 8', opacity: 0.7 }
+                ).addTo(map);
+
+                // Fit bounds to show both markers
+                const bounds = L.latLngBounds([[lat, lng], [clientPos.lat, clientPos.lng]]);
+                map.fitBounds(bounds, { padding: [60, 60] });
+            }
+        }
+
+        function updateStatusUI(status) {
+            const badge = document.getElementById('statusBadge');
+            const text = document.getElementById('statusText');
+
+            badge.className = 'status-badge';
+
+            switch (status) {
+                case 'pending':
+                    badge.classList.add('status-preparing');
+                    text.textContent = 'En attente';
+                    break;
+                case 'preparing':
+                    badge.classList.add('status-preparing');
+                    text.textContent = 'En préparation 👨‍🍳';
+                    break;
+                case 'delivering':
+                    badge.classList.add('status-delivering');
+                    text.textContent = 'En livraison 🛵';
+                    break;
+                case 'ready':
+                case 'delivered':
+                    badge.classList.add('status-delivered');
+                    text.textContent = 'Livrée ✅';
+                    break;
+                default:
+                    badge.classList.add('status-preparing');
+                    text.textContent = status;
+            }
+        }
+    </script>
+</body>
+</html>

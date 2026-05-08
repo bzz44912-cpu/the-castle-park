@@ -650,18 +650,36 @@
                     address: document.getElementById('orderAddress').value,
                     items: cart,
                     total: cart.reduce((sum, item) => sum + (item.price * item.qty), 0),
-                    fcm_token: window.fcmToken || localStorage.getItem('web_fcm_token') || null
+                    fcm_token: window.fcmToken || localStorage.getItem('web_fcm_token') || null,
+                    client_lat: null,
+                    client_lng: null
                 };
 
-                // Si pas de token, on avertit discrètement en console au lieu d'une alerte bloquante
+                // Si pas de token, on avertit discrètement
                 if (!orderData.fcm_token) {
-                    console.warn("Note: Aucun token de notification (FCM) détecté. Le client ne recevra pas de push notifications.");
-                } else {
-                    console.log("FCM Token détecté:", orderData.fcm_token);
+                    console.warn("Note: Aucun token FCM détecté.");
+                }
+
+                btn.innerText = "LOCALISATION...";
+                btn.disabled = true;
+
+                // Capturer la position GPS du client
+                try {
+                    const pos = await new Promise((resolve, reject) => {
+                        navigator.geolocation.getCurrentPosition(resolve, reject, {
+                            enableHighAccuracy: true,
+                            timeout: 8000,
+                            maximumAge: 0
+                        });
+                    });
+                    orderData.client_lat = pos.coords.latitude;
+                    orderData.client_lng = pos.coords.longitude;
+                    console.log("📍 Position GPS capturée:", orderData.client_lat, orderData.client_lng);
+                } catch (geoErr) {
+                    console.warn("⚠️ GPS non disponible:", geoErr.message);
                 }
 
                 btn.innerText = "TRAITEMENT...";
-                btn.disabled = true;
 
                 try {
                     const { data: newOrder, error } = await supabaseClient
@@ -673,7 +691,9 @@
                             items: orderData.items,
                             total: orderData.total,
                             fcm_token: orderData.fcm_token,
-                            status: 'pending'
+                            status: 'pending',
+                            client_lat: orderData.client_lat,
+                            client_lng: orderData.client_lng
                         }])
                         .select()
                         .single();
@@ -762,10 +782,14 @@
                     }
 
                     let msg = "";
+                    const trackingUrl = `${window.location.origin}/tracking.html?id=${updatedOrder.id}`;
+
                     if (updatedOrder.status === 'preparing') {
-                        msg = `🎉 **Bonne nouvelle !**\n\nVotre commande **#${updatedOrder.id.substring(0, 4)}** a été acceptée ! Elle est maintenant en préparation en cuisine. 👨‍🍳✨`;
-                    } else if (updatedOrder.status === 'ready') {
-                        msg = `✅ **Votre commande est prête !**\n\nVotre délice est prêt à être dégusté. Notre équipe s'occupe du reste. Bon appétit ! 🏰🍴`;
+                        msg = `🎉 **Bonne nouvelle !**\n\nVotre commande **#${updatedOrder.id.substring(0, 4)}** a été acceptée ! Elle est maintenant en préparation en cuisine. 👨‍🍳✨\n\n📍 [Suivre la localisation de la commande](${trackingUrl})`;
+                    } else if (updatedOrder.status === 'delivering') {
+                        msg = `🛵 **Votre commande est en route !**\n\nLe livreur est parti avec votre commande **#${updatedOrder.id.substring(0, 4)}**.\n\n📍 [Suivre le livreur en temps réel](${trackingUrl})`;
+                    } else if (updatedOrder.status === 'ready' || updatedOrder.status === 'delivered') {
+                        msg = `✅ **Votre commande est prête !**\n\nVotre délice est prêt à être dégusté. Bon appétit ! 🏰🍴`;
                     }
 
                     if (msg) {

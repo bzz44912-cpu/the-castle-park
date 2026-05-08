@@ -22,7 +22,11 @@ CREATE TABLE IF NOT EXISTS orders (
     items JSONB NOT NULL,
     total NUMERIC NOT NULL,
     status TEXT DEFAULT 'pending',
-    fcm_token TEXT
+    fcm_token TEXT,
+    client_lat NUMERIC,
+    client_lng NUMERIC,
+    delivery_lat NUMERIC,
+    delivery_lng NUMERIC
 );
 
 -- 3. Table des Messages Contact
